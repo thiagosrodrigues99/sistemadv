@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem ADV | Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./src/style.css">
+    <style>
+        .login-split {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .login-visual {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.9), rgba(124, 58, 237, 0.8)), url('./src/assets/legal_justice.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem;
+            color: white;
+        }
+        .login-visual h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .login-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: white;
+        }
+        .login-inner {
+            width: 100%;
+            max-width: 400px;
+        }
+        @media (max-width: 968px) {
+            .login-split { grid-template-columns: 1fr; }
+            .login-visual { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-split">
+        <div class="login-visual">
+            <div class="logo" style="font-size: 2.5rem; margin-bottom: 2rem;">DIOGO<span>.</span></div>
+            <h1>A sua gestão <br><span style="color: #c7d2fe;">simplificada</span>.</h1>
+            <p style="font-size: 1.2rem; opacity: 0.9;">Entre na plataforma para gerenciar seus processos e clientes com máxima eficiência.</p>
+        </div>
+        <div class="login-content">
+            <div class="login-inner">
+                <div class="login-header" style="text-align: left; margin-bottom: 3rem;">
+                    <h2 style="font-size: 2rem; margin-bottom: 0.5rem;">Bem-vindo</h2>
+                    <p style="color: var(--text-muted);">Por favor, insira seus dados para entrar.</p>
+                </div>
+
+                <form class="login-form">
+                    <div class="form-group">
+                        <label for="username">Usuário</label>
+                        <input type="text" id="username" placeholder="nome_usuario" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                    
+                    <div class="login-options" style="margin-top: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.9rem;">
+                            <input type="checkbox"> Manter conectado
+                        </label>
+                        <a href="#" style="font-size: 0.9rem; font-weight: 600; color: var(--primary);">Esqueceu a senha?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login" style="margin-top: 2rem; height: 55px; font-size: 1.1rem;">Entrar na Conta</button>
+                    
+                    <p style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted);">
+                        Ainda não tem conta? <a href="#" style="color: var(--primary); font-weight: 600; text-decoration: none;">Solicitar Acesso</a>
+                    </p>
+                </form>
+
+                <a href="index.html" class="back-home" style="display: block; text-align: center; margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted); text-decoration: none;">← Voltar para a Landing Page</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        document.querySelector('.login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+
+            btn.innerText = 'Verificando...';
+            btn.disabled = true;
+
+            // Simulação de autenticação básica
+            setTimeout(() => {
+                if (user === 'admin' && pass === 'admin') {
+                    window.location.href = 'dashboard.html';
+                } else {
+                    alert('Usuário ou senha incorretos! (Tente admin/admin)');
+                    btn.innerText = 'Entrar na Conta';
+                    btn.disabled = false;
+                }
+            }, 800);
+        });
+    </script>
+</body>
+</html>
