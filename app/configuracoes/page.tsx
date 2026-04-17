@@ -55,11 +55,65 @@ export default function SettingsPage() {
           </div>
         </header>
 
-        <section className="data-section">
-          <div style={{ padding: '5rem', textAlign: 'center', color: '#94a3b8' }}>
-            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '48px', height: '48px', margin: '0 auto 1.5rem', opacity: 0.5 }}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-            <p style={{ fontSize: '1.1rem' }}>Página de Configurações em desenvolvimento.</p>
+        <section className="data-section" style={{ maxWidth: '800px' }}>
+          <div className="section-header">
+            <h3>Configurações de Rastreamento</h3>
           </div>
+          <p style={{ color: '#64748b', marginBottom: '2.5rem', fontSize: '0.95rem' }}>
+            Insira os IDs ou scripts dos respectivos pixels para ativar o rastreamento em suas páginas.
+          </p>
+
+          <form style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: 500, color: '#334155' }}>Pixel Facebook</label>
+                <input 
+                  type="text" 
+                  placeholder="ID do Pixel (ex: 123456789...)"
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', outline: 'none' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: 500, color: '#334155' }}>Pixel TikTok</label>
+                <input 
+                  type="text" 
+                  placeholder="ID do Pixel TikTok..."
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', outline: 'none' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: 500, color: '#334155' }}>Google Analytics (GA4)</label>
+                <input 
+                  type="text" 
+                  placeholder="G-XXXXXX..."
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', outline: 'none' }}
+                />
+              </div>
+              <div>
+                <label style={{ display: 'block', marginBottom: '0.8rem', fontWeight: 500, color: '#334155' }}>Google Tag Manager</label>
+                <input 
+                  type="text" 
+                  placeholder="GTM-XXXXXX..."
+                  style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', outline: 'none' }}
+                />
+              </div>
+            </div>
+
+            <div style={{ marginTop: '1rem', padding: '1.5rem', background: '#f8fafc', borderRadius: '15px', borderLeft: '4px solid #f59e0b' }}>
+              <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
+                <strong>Dica:</strong> Certifique-se de salvar as alterações para que os pixels sejam aplicados em todas as suas landing pages.
+              </p>
+            </div>
+
+            <button 
+              type="button"
+              className="btn-primary" 
+              style={{ width: 'fit-content', padding: '1rem 3rem', alignSelf: 'flex-start' }}
+              onClick={() => alert('Configurações salvas com sucesso!')}
+            >
+              Salvar Configurações
+            </button>
+          </form>
         </section>
       </main>
     </div>

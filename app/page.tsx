@@ -1,8 +1,63 @@
 import Link from 'next/link';
+import Script from 'next/script';
 
 export default function LandingPage() {
   return (
     <div id="app">
+      {/* Tracking Pixels */}
+      
+      {/* Google Tag Manager */}
+      <Script id="google-tag-manager" strategy="afterInteractive">
+        {`
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-XXXXXXX');
+        `}
+      </Script>
+
+      {/* Google Analytics (ga4) */}
+      <Script
+        src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-XXXXXXXXXX');
+        `}
+      </Script>
+
+      {/* Facebook Pixel */}
+      <Script id="facebook-pixel" strategy="afterInteractive">
+        {`
+          !function(f,b,e,v,n,t,s)
+          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window, document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+          fbq('init', 'YOUR_FB_PIXEL_ID');
+          fbq('track', 'PageView');
+        `}
+      </Script>
+
+      {/* TikTok Pixel */}
+      <Script id="tiktok-pixel" strategy="afterInteractive">
+        {`
+          !function (w, d, t) {
+            w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","detach","setAndVerify","eventProperty","identifyProperty"],ttq.setAndVerify=function(t,n){ttq._verify=ttq._verify||{},ttq._verify[t]=n},ttq.className="ttq-instance",ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=i,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};var o=document.createElement("script");o.type="text/javascript",o.async=!0,o.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)};
+            ttq.load('YOUR_TIKTOK_PIXEL_ID');
+            ttq.page();
+          }(window, document, 'ttq');
+        `}
+      </Script>
+
       <header className="main-header">
         <nav>
           <div className="logo">DIOGO<span>.</span></div>
