@@ -98,6 +98,10 @@ export default function LandingPage() {
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>CPF</label>
                   <input type="text" placeholder="000.000.000-00" className="form-input" />
                 </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Conte um pouco sobre o acidente</label>
+                  <textarea placeholder="Descreva brevemente o ocorrido..." className="form-input" style={{ minHeight: '120px', resize: 'vertical' }}></textarea>
+                </div>
                 <button type="button" className="btn-main" style={{ width: '100%', marginTop: '0.5rem', padding: '1.2rem', fontWeight: '700', fontSize: '1rem' }}>QUERO SABER QUANTO TENHO PARA RECEBER</button>
               </form>
             </div>
