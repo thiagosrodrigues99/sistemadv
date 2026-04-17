@@ -1,9 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
 export default function LeadsPage() {
+  const router = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeStatus, setActiveStatus] = useState('Todos');
   const [leads, setLeads] = useState<any[]>([]);
@@ -22,13 +24,72 @@ export default function LeadsPage() {
     setSelectedLead(null);
   };
 
-  const statusOptions = ['Todos', 'Novo', 'Em Atendimento', 'Concluído'];
+  const handleOpenFicha = (lead: any) => {
+    // Se o status for "Sem contato" ou "Novo", move para "Abrir ficha"
+    if (lead.status === 'Sem contato' || lead.status === 'Novo') {
+      const updatedLeads = leads.map(l => {
+        if (l.id === lead.id) {
+          return { ...l, status: 'Abrir ficha' };
+        }
+        return l;
+      });
+      localStorage.setItem('sistemadv_leads', JSON.stringify(updatedLeads));
+      setLeads(updatedLeads);
+    }
+    router.push(`/ficha/${lead.id}`);
+  };
+
+  const handleAgendarReuniao = (lead: any) => {
+    const updatedLeads = leads.map(l => {
+      if (l.id === lead.id) {
+        return { ...l, status: 'Reunião com jurídico' };
+      }
+      return l;
+    });
+    localStorage.setItem('sistemadv_leads', JSON.stringify(updatedLeads));
+    setLeads(updatedLeads);
+
+    // Salvar também no calendário (sistemadv_reunioes)
+    const savedMeetings = JSON.parse(localStorage.getItem('sistemadv_reunioes') || '{}');
+    const today = new Date().getDate();
+    if (!savedMeetings[today]) savedMeetings[today] = [];
+    savedMeetings[today].push({ 
+      time: 'Pendente', 
+      title: `Reunião: ${lead.nome}`, 
+      type: 'client',
+      leadId: lead.id
+    });
+    localStorage.setItem('sistemadv_reunioes', JSON.stringify(savedMeetings));
+
+    router.push(`/reunioes?leadName=${encodeURIComponent(lead.nome)}&leadId=${lead.id}`);
+  };
+
+  const handleGoBack = (lead: any) => {
+    const statusSequence = ['Sem contato', 'Abrir ficha', 'Ficha aberta', 'Reunião com jurídico', 'Pericia agendada', 'Aguardando resultado'];
+    const currentIndex = statusSequence.indexOf(lead.status);
+    
+    if (currentIndex > 0) {
+      const prevStatus = statusSequence[currentIndex - 1];
+      const updatedLeads = leads.map(l => {
+        if (l.id === lead.id) {
+          return { ...l, status: prevStatus };
+        }
+        return l;
+      });
+      localStorage.setItem('sistemadv_leads', JSON.stringify(updatedLeads));
+      setLeads(updatedLeads);
+    }
+  };
+
+  const statusOptions = ['Todos', 'Sem contato', 'Abrir ficha', 'Ficha aberta', 'Reunião com jurídico', 'Pericia agendada', 'Aguardando resultado'];
 
   const filteredLeads = leads.filter((lead: any) => {
     const matchesSearch = 
       (lead.nome?.toLowerCase().includes(searchTerm.toLowerCase()) || 
        lead.email?.toLowerCase().includes(searchTerm.toLowerCase()));
-    const matchesStatus = activeStatus === 'Todos' || lead.status === activeStatus;
+    const matchesStatus = activeStatus === 'Todos' || 
+                         lead.status === activeStatus || 
+                         (activeStatus === 'Sem contato' && lead.status === 'Novo');
     return matchesSearch && matchesStatus;
   });
 
@@ -74,9 +135,9 @@ export default function LeadsPage() {
             </div>
             <div className="modal-footer">
               <button className="btn-secondary" onClick={closeModal}>Fechar</button>
-              <Link href={`/ficha/${selectedLead.id}`} className="btn-ficha">
+              <button onClick={() => handleOpenFicha(selectedLead)} className="btn-ficha">
                 Abrir ficha
-              </Link>
+              </button>
               <a 
                 href={`https://wa.me/55${selectedLead.telefone.replace(/\D/g, '')}`} 
                 target="_blank" 
@@ -177,7 +238,7 @@ export default function LeadsPage() {
               <tr>
                 <th>NOME</th>
                 <th>E-MAIL</th>
-                <th>ASSUNTO</th>
+                <th>TELEFONE</th>
                 <th>DATA</th>
                 <th>STATUS</th>
                 <th>AÇÕES</th>
@@ -188,26 +249,57 @@ export default function LeadsPage() {
                 <tr key={lead.id}>
                   <td>{lead.nome}</td>
                   <td>{lead.email}</td>
-                  <td>{lead.assunto}</td>
+                  <td>{lead.telefone}</td>
                   <td>{lead.data}</td>
                   <td>
                     <span className="status-badge" style={{ 
-                      background: lead.status === 'Sem contato' ? '#fffbeb' : 
-                                  lead.status === 'Reunião agendada' ? '#ecfdf5' : 
-                                  lead.status === 'Aguardando documentação' ? '#fef2f2' : 
-                                  lead.status === 'Pericia marcada' ? '#e0f2fe' : 
-                                  '#f5f3ff',
-                      color: lead.status === 'Sem contato' ? '#f59e0b' : 
-                             lead.status === 'Reunião agendada' ? '#10b981' : 
-                             lead.status === 'Aguardando documentação' ? '#ef4444' : 
-                             lead.status === 'Pericia marcada' ? '#0ea5e9' : 
-                             '#8b5cf6'
+                      background: lead.status === 'Sem contato' ? '#fef2f2' : 
+                                  lead.status === 'Abrir ficha' ? '#f0fdf4' : 
+                                  lead.status === 'Ficha aberta' ? '#fffbeb' : 
+                                  lead.status === 'Reunião com jurídico' ? '#f5f3ff' : 
+                                  lead.status === 'Pericia agendada' ? '#e0f2fe' : 
+                                  lead.status === 'Aguardando resultado' ? '#ecfdf5' : 
+                                  '#f8fafc',
+                      color: lead.status === 'Sem contato' ? '#ef4444' : 
+                             lead.status === 'Abrir ficha' ? '#16a34a' : 
+                             lead.status === 'Ficha aberta' ? '#f59e0b' : 
+                             lead.status === 'Reunião com jurídico' ? '#8b5cf6' : 
+                             lead.status === 'Pericia agendada' ? '#0ea5e9' : 
+                             lead.status === 'Aguardando resultado' ? '#10b981' : 
+                             '#64748b'
                     }}>
                       {lead.status}
                     </span>
                   </td>
-                  <td>
+                  <td style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <button 
+                      onClick={() => handleGoBack(lead)} 
+                      style={{ background: 'none', border: '1px solid #e2e8f0', borderRadius: '4px', cursor: 'pointer', padding: '2px 5px', fontSize: '0.8rem', color: '#64748b' }}
+                      title="Voltar etapa"
+                    >
+                      ←
+                    </button>
                     <button className="btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }} onClick={() => openModal(lead)}>Ver informações</button>
+                    {(lead.status === 'Sem contato' || lead.status === 'Novo') && (
+                      <a 
+                        href={`https://wa.me/55${lead.telefone.replace(/\D/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn-whatsapp"
+                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', textDecoration: 'none' }}
+                      >
+                        WhatsApp
+                      </a>
+                    )}
+                    {lead.status === 'Ficha aberta' && (
+                      <button 
+                        onClick={() => handleAgendarReuniao(lead)} 
+                        className="btn-primary" 
+                        style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem', background: '#111234' }}
+                      >
+                        Agendar reunião
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

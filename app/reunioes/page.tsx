@@ -1,13 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 
-export default function MeetingsPage() {
-  const [currentMonth, setCurrentMonth] = useState(3); // 3 = Abril (0-indexado)
-  const [currentYear] = useState(2026);
+function MeetingsContent() {
+  const searchParams = useSearchParams();
+  const leadName = searchParams.get('leadName') || '';
+  const leadId = searchParams.get('leadId') || '';
+
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
+  const [currentYear] = useState(new Date().getFullYear());
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newMeetingTitle, setNewMeetingTitle] = useState('');
+
+  useEffect(() => {
+    if (leadName) {
+      setNewMeetingTitle(leadName);
+    }
+  }, [leadName]);
   
   const months = [
     'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
@@ -22,11 +34,45 @@ export default function MeetingsPage() {
   const weekDays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
   const timeSlots = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00', '22:00'];
 
-  // Dados simulados de reuniões agendadas
-  const meetings: Record<number, Array<{ time: string; title: string; type: 'client' | 'court' | 'internal' }>> = {
-    16: [{ time: '14:00', title: 'Consultoria Cliente X', type: 'client' }],
-    18: [{ time: '10:30', title: 'Audiência Tribunal', type: 'court' }],
-    20: [{ time: '09:00', title: 'Reunião de Equipe', type: 'internal' }]
+  const [meetings, setMeetings] = useState<Record<number, Array<{ time: string; title: string; type: 'client' | 'court' | 'internal'; leadId?: any }>>>({});
+  const [allLeads, setAllLeads] = useState<any[]>([]);
+
+  useEffect(() => {
+    const savedMeetings = JSON.parse(localStorage.getItem('sistemadv_reunioes') || '{}');
+    const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
+    setAllLeads(savedLeads);
+
+    if (Object.keys(savedMeetings).length === 0) {
+      const initialMeetings = {
+        16: [{ time: '14:00', title: 'Consultoria Cliente X', type: 'client' }],
+        18: [{ time: '10:30', title: 'Audiência Tribunal', type: 'court' }],
+        20: [{ time: '09:00', title: 'Reunião de Equipe', type: 'internal' }]
+      };
+      localStorage.setItem('sistemadv_reunioes', JSON.stringify(initialMeetings));
+      setMeetings(initialMeetings);
+    } else {
+      setMeetings(savedMeetings);
+    }
+  }, []);
+
+  const saveMeeting = (day: number, time: string, title: string) => {
+    const updatedMeetings = { ...meetings };
+    if (!updatedMeetings[day]) updatedMeetings[day] = [];
+    
+    // Comparação insensível a maiúsculas/minúsculas para vincular o ID
+    const isMainLead = leadName && title.toLowerCase().trim() === leadName.toLowerCase().trim();
+    const associatedLeadId = isMainLead ? leadId : null;
+    
+    updatedMeetings[day].push({ 
+      time, 
+      title, 
+      type: 'client', 
+      leadId: associatedLeadId 
+    });
+    
+    localStorage.setItem('sistemadv_reunioes', JSON.stringify(updatedMeetings));
+    setMeetings(updatedMeetings);
+    alert('Reunião agendada com sucesso!');
   };
 
   const handleDayClick = (day: number) => {
@@ -35,9 +81,9 @@ export default function MeetingsPage() {
   };
 
   const getStatusColor = (type: string) => {
-    if (type === 'court') return '#ef4444'; // Vermelho para tribunal
-    if (type === 'client') return 'var(--primary)'; // Navy para cliente
-    return '#10b981'; // Verde para interno
+    if (type === 'court') return '#ef4444'; 
+    if (type === 'client') return '#111234'; 
+    return '#10b981'; 
   };
 
   return (
@@ -131,7 +177,7 @@ export default function MeetingsPage() {
             ))}
 
             {days.map(day => {
-              const isToday = day === 16 && currentMonth === 3; // 16 de Abril
+              const isToday = day === new Date().getDate() && currentMonth === new Date().getMonth();
               const dayMeetings = meetings[day] || [];
               return (
                 <div 
@@ -186,7 +232,6 @@ export default function MeetingsPage() {
                 </button>
               </div>
 
-              {/* Seção de Reuniões Agendadas */}
               <div style={{ marginBottom: '2rem' }}>
                 <h3 style={{ fontSize: '1rem', color: '#64748b', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>Reuniões do Dia</h3>
                 {(meetings[selectedDay || 0] || []).length > 0 ? (
@@ -202,7 +247,33 @@ export default function MeetingsPage() {
                       borderLeft: `4px solid ${getStatusColor(m.type)}`
                     }}>
                       <span style={{ fontWeight: 600, color: 'var(--primary)', minWidth: '50px' }}>{m.time}</span>
-                      <span style={{ color: '#111827', fontWeight: 500 }}>{m.title}</span>
+                      <span style={{ color: '#111827', fontWeight: 500, flexGrow: 1 }}>{m.title}</span>
+                      {(() => {
+                        // Tenta usar o leadId salvo ou busca pelo nome como fallback
+                        const id = m.leadId || allLeads.find(l => 
+                          l.nome?.toLowerCase().trim() === m.title.toLowerCase().trim() ||
+                          m.title.toLowerCase().includes(l.nome?.toLowerCase().trim())
+                        )?.id;
+
+                        if (id) {
+                          return (
+                            <Link 
+                              href={`/ficha/${id}`} 
+                              style={{ 
+                                fontSize: '0.75rem', 
+                                padding: '0.4rem 0.8rem', 
+                                background: '#111234', 
+                                color: 'white', 
+                                borderRadius: '6px', 
+                                textDecoration: 'none' 
+                              }}
+                            >
+                              Ver ficha
+                            </Link>
+                          );
+                        }
+                        return null;
+                      })()}
                     </div>
                   ))
                 ) : (
@@ -210,9 +281,26 @@ export default function MeetingsPage() {
                 )}
               </div>
 
-              {/* Seção de Novo Agendamento */}
               <div>
                 <h3 style={{ fontSize: '1rem', color: '#64748b', marginBottom: '1rem', borderBottom: '1px solid #f1f5f9', paddingBottom: '0.5rem' }}>Agendar Novo Horário</h3>
+                
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem', color: '#475569' }}>NOME DO LEAD / TÍTULO</label>
+                  <input 
+                    type="text" 
+                    value={newMeetingTitle}
+                    onChange={(e) => setNewMeetingTitle(e.target.value)}
+                    placeholder="Ex: Thiago de Souza"
+                    style={{ 
+                      width: '100%', 
+                      padding: '0.8rem', 
+                      borderRadius: '12px', 
+                      border: '1px solid #e2e8f0',
+                      outline: 'none'
+                    }}
+                  />
+                </div>
+
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.8rem' }}>
                   {timeSlots.map(time => {
                     const isBusy = (meetings[selectedDay || 0] || []).some(m => m.time === time);
@@ -232,7 +320,9 @@ export default function MeetingsPage() {
                           cursor: isBusy ? 'not-allowed' : 'pointer'
                         }}
                         onClick={() => {
-                          alert(`Agendamento solicitado para: ${time}`);
+                          if (!newMeetingTitle) return alert('Por favor, digite o nome do lead.');
+                          saveMeeting(selectedDay || 0, time, newMeetingTitle);
+                          setNewMeetingTitle('');
                           setIsModalOpen(false);
                         }}
                       >
@@ -255,5 +345,13 @@ export default function MeetingsPage() {
         )}
       </main>
     </div>
+  );
+}
+
+export default function MeetingsPage() {
+  return (
+    <Suspense fallback={<div style={{ padding: '2rem', textAlign: 'center' }}>Carregando agenda...</div>}>
+      <MeetingsContent />
+    </Suspense>
   );
 }

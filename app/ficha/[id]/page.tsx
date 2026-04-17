@@ -41,7 +41,9 @@ export default function FichaLead() {
     const index = savedLeads.findIndex((l: any) => l.id.toString() === params.id);
     
     if (index !== -1) {
-      savedLeads[index] = lead;
+      const updatedLead = { ...lead, status: 'Ficha aberta' };
+      savedLeads[index] = updatedLead;
+      setLead(updatedLead);
       localStorage.setItem('sistemadv_leads', JSON.stringify(savedLeads));
       setTimeout(() => {
         setIsSaving(false);
@@ -233,7 +235,7 @@ export default function FichaLead() {
 
         <footer style={{ marginTop: '2rem', padding: '2rem 0', borderTop: '2px solid #f1f5f9', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
           <button onClick={() => router.back()} className="btn-secondary" style={{ padding: '0.8rem 2rem' }}>Voltar</button>
-          <button onClick={handleSave} className="btn-ficha" style={{ padding: '0.8rem 2.5rem', background: isSaving ? '#94a3b8' : '#4f46e5', color: 'white' }} disabled={isSaving}>
+          <button onClick={handleSave} className="btn-ficha" style={{ padding: '0.8rem 2.5rem', background: isSaving ? '#94a3b8' : '#111234', color: 'white' }} disabled={isSaving}>
             {isSaving ? 'Salvando...' : 'Salvar Alterações'}
           </button>
           <button onClick={() => window.print()} className="btn-secondary" style={{ padding: '0.8rem 2rem' }}>Gerar PDF/Imprimir</button>

@@ -22,7 +22,7 @@ export default function LandingPage() {
     const newLead = {
       id: Date.now(),
       ...formData,
-      status: 'Novo',
+      status: 'Sem contato',
       data: new Date().toLocaleDateString('pt-BR'),
       origem: 'Landing Page'
     };
