@@ -1,31 +1,95 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function LeadsPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeStatus, setActiveStatus] = useState('Todos');
+  const [leads, setLeads] = useState<any[]>([]);
+  const [selectedLead, setSelectedLead] = useState<any>(null);
 
-  const statusOptions = ['Todos', 'Sem contato', 'Reunião agendada', 'Aguardando documentação', 'Pericia marcada', 'Em processo'];
+  useEffect(() => {
+    const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
+    setLeads(savedLeads);
+  }, []);
 
-  const leads = [
-    { id: 1, nome: 'Carlos Eduardo', email: 'carlos@email.com', assunto: 'Consultoria de Licitação', data: '16/04/2026', status: 'Sem contato' },
-    { id: 2, nome: 'Ana Beatriz', email: 'ana.b@empresa.com.br', assunto: 'Dúvida Trabalhista', data: '16/04/2026', status: 'Reunião agendada' },
-    { id: 3, nome: 'Roberto Mendes', email: 'roberto@mendes.adv', assunto: 'Assessoria Mensal', data: '15/04/2026', status: 'Em processo' },
-    { id: 4, nome: 'Mariana Costa', email: 'mari@costa.com', assunto: 'Licitação Previdenciária', data: '14/04/2026', status: 'Pericia marcada' },
-    { id: 5, nome: 'João Silva', email: 'joao@silva.com', assunto: 'Contrato Civil', data: '13/04/2026', status: 'Aguardando documentação' },
-  ];
+  const openModal = (lead: any) => {
+    setSelectedLead(lead);
+  };
 
-  const filteredLeads = leads.filter(lead => {
-    const matchesSearch = lead.nome.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                          lead.email.toLowerCase().includes(searchTerm.toLowerCase());
+  const closeModal = () => {
+    setSelectedLead(null);
+  };
+
+  const statusOptions = ['Todos', 'Novo', 'Em Atendimento', 'Concluído'];
+
+  const filteredLeads = leads.filter((lead: any) => {
+    const matchesSearch = 
+      (lead.nome?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+       lead.email?.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesStatus = activeStatus === 'Todos' || lead.status === activeStatus;
     return matchesSearch && matchesStatus;
   });
 
   return (
     <div className="dashboard-layout">
+      {/* Detalhes do Lead (Modal) */}
+      {selectedLead && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-card" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h2>Detalhes do Lead</h2>
+              <button className="close-btn" onClick={closeModal}>&times;</button>
+            </div>
+            <div className="modal-body">
+              <div className="detail-section">
+                <span className="detail-label">NOME COMPLETO</span>
+                <p className="detail-value">{selectedLead.nome}</p>
+              </div>
+              <div className="detail-grid">
+                <div className="detail-section">
+                  <span className="detail-label">CPF</span>
+                  <p className="detail-value">{selectedLead.cpf}</p>
+                </div>
+                <div className="detail-section">
+                  <span className="detail-label">DATA</span>
+                  <p className="detail-value">{selectedLead.data}</p>
+                </div>
+              </div>
+              <div className="detail-grid">
+                <div className="detail-section">
+                  <span className="detail-label">E-MAIL</span>
+                  <p className="detail-value">{selectedLead.email}</p>
+                </div>
+                <div className="detail-section">
+                  <span className="detail-label">TELEFONE</span>
+                  <p className="detail-value">{selectedLead.telefone}</p>
+                </div>
+              </div>
+              <div className="detail-section">
+                <span className="detail-label">SOBRE O ACIDENTE</span>
+                <p className="detail-value message-box">{selectedLead.mensagem}</p>
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button className="btn-secondary" onClick={closeModal}>Fechar</button>
+              <Link href={`/ficha/${selectedLead.id}`} className="btn-ficha">
+                Abrir ficha
+              </Link>
+              <a 
+                href={`https://wa.me/55${selectedLead.telefone.replace(/\D/g, '')}`} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn-whatsapp"
+              >
+                Abrir no WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+
       <aside className="sidebar">
         <div className="logo" style={{ marginBottom: '2.5rem' }}>
           <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto' }} />
@@ -143,7 +207,7 @@ export default function LeadsPage() {
                     </span>
                   </td>
                   <td>
-                    <button className="btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }}>Ver informações</button>
+                    <button className="btn-primary" style={{ padding: '0.4rem 0.8rem', fontSize: '0.75rem' }} onClick={() => openModal(lead)}>Ver informações</button>
                   </td>
                 </tr>
               ))}

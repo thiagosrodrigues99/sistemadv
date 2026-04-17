@@ -1,7 +1,44 @@
+'use client';
+
+import { useState } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
 
 export default function LandingPage() {
+  const [formData, setFormData] = useState({
+    nome: '',
+    telefone: '',
+    email: '',
+    cpf: '',
+    mensagem: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Obter leads existentes ou criar novo array
+    const existingLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
+    
+    const newLead = {
+      id: Date.now(),
+      ...formData,
+      status: 'Novo',
+      data: new Date().toLocaleDateString('pt-BR'),
+      origem: 'Landing Page'
+    };
+    
+    const updatedLeads = [newLead, ...existingLeads];
+    localStorage.setItem('sistemadv_leads', JSON.stringify(updatedLeads));
+    
+    // Atualizar métrica de formulários no dashboard
+    const stats = JSON.parse(localStorage.getItem('sistemadv_stats') || '{"forms": 0}');
+    stats.forms = (stats.forms || 0) + 1;
+    localStorage.setItem('sistemadv_stats', JSON.stringify(stats));
+
+    alert('Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.');
+    setFormData({ nome: '', telefone: '', email: '', cpf: '', mensagem: '' });
+  };
+
   return (
     <div id="app">
       {/* Tracking Pixels */}
@@ -81,28 +118,63 @@ export default function LandingPage() {
 
             <div className="hero-form-card">
               <h3 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', color: 'var(--primary)', fontWeight: '700' }}>SOLICITAR ANÁLISE INICIAL</h3>
-              <form style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Nome completo</label>
-                  <input type="text" placeholder="Seu nome aqui" className="form-input" />
+                  <input 
+                    type="text" 
+                    placeholder="Seu nome aqui" 
+                    className="form-input" 
+                    required
+                    value={formData.nome}
+                    onChange={(e) => setFormData({...formData, nome: e.target.value})}
+                  />
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Telefone</label>
-                  <input type="tel" placeholder="(00) 00000-0000" className="form-input" />
+                  <input 
+                    type="tel" 
+                    placeholder="(00) 00000-0000" 
+                    className="form-input" 
+                    required
+                    value={formData.telefone}
+                    onChange={(e) => setFormData({...formData, telefone: e.target.value})}
+                  />
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>E-mail</label>
-                  <input type="email" placeholder="seu@email.com" className="form-input" />
+                  <input 
+                    type="email" 
+                    placeholder="seu@email.com" 
+                    className="form-input" 
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                  />
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>CPF</label>
-                  <input type="text" placeholder="000.000.000-00" className="form-input" />
+                  <input 
+                    type="text" 
+                    placeholder="000.000.000-00" 
+                    className="form-input" 
+                    required
+                    value={formData.cpf}
+                    onChange={(e) => setFormData({...formData, cpf: e.target.value})}
+                  />
                 </div>
                 <div>
                   <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Conte um pouco sobre o acidente</label>
-                  <textarea placeholder="Descreva brevemente o ocorrido..." className="form-input" style={{ minHeight: '120px', resize: 'vertical' }}></textarea>
+                  <textarea 
+                    placeholder="Descreva brevemente o ocorrido..." 
+                    className="form-input" 
+                    style={{ minHeight: '120px', resize: 'vertical' }}
+                    required
+                    value={formData.mensagem}
+                    onChange={(e) => setFormData({...formData, mensagem: e.target.value})}
+                  ></textarea>
                 </div>
-                <button type="button" className="btn-main" style={{ width: '100%', marginTop: '0.5rem', padding: '1.2rem', fontWeight: '700', fontSize: '1rem' }}>QUERO SABER QUANTO TENHO PARA RECEBER</button>
+                <button type="submit" className="btn-main" style={{ width: '100%', marginTop: '0.5rem', padding: '1.2rem', fontWeight: '700', fontSize: '1rem' }}>QUERO SABER QUANTO TENHO PARA RECEBER</button>
               </form>
             </div>
           </div>

@@ -1,16 +1,51 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 export default function DashboardPage() {
   const [activeFilter, setActiveFilter] = useState('Hoje');
+  const [stats, setStats] = useState({ leads: 0, forms: 0 });
+  const [tableData, setTableData] = useState<Record<string, any[]>>({
+    'Hoje': [],
+    'Semana': [],
+    'Mês': [],
+    'Personalizado': []
+  });
+
+  useEffect(() => {
+    // Carregar leads e gerar estatísticas
+    const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
+    const savedStats = JSON.parse(localStorage.getItem('sistemadv_stats') || '{"forms": 0}');
+    
+    setStats({
+      leads: savedLeads.length,
+      forms: savedStats.forms || 0
+    });
+
+    // Mapear leads reais para o formato da tabela
+    const realLeads = savedLeads.map((l: any) => ({
+      nome: l.nome,
+      email: l.email,
+      assunto: l.mensagem || 'Interesse em receber',
+      data: l.data || 'Hoje',
+      status: l.status || 'Novo',
+      statusClass: 'pending'
+    }));
+
+    setTableData({
+      'Hoje': realLeads.slice(0, 5),
+      'Semana': realLeads.slice(0, 10),
+      'Mês': realLeads,
+      'Personalizado': realLeads
+    });
+  }, []);
 
   // Dados simulados para cada filtro
   const statsData: Record<string, { visitas: string; forms: string; conversao: string; trendV: string; trendF: string; trendC: string }> = {
     'Hoje': { 
       visitas: '1.284', 
-      forms: '42', 
+      forms: stats.forms.toString(), 
       conversao: '3,2%', 
       trendV: '+12% hoje', 
       trendF: '+5 novos hoje',
@@ -26,7 +61,7 @@ export default function DashboardPage() {
     },
     'Mês': { 
       visitas: '35.120', 
-      forms: '890', 
+      forms: stats.forms.toString(), 
       conversao: '2,5%', 
       trendV: '+15% vs. mês ant.', 
       trendF: '+112 novos no mês',
@@ -40,29 +75,6 @@ export default function DashboardPage() {
       trendF: 'Selecione período',
       trendC: 'N/A'
     }
-  };
-
-  // Dados simulados para a tabela em cada filtro
-  const tableData: Record<string, Array<{ nome: string; email: string; assunto: string; data: string; status: string; statusClass: string }>> = {
-    'Hoje': [
-      { nome: 'Carlos Eduardo', email: 'carlos@email.com', assunto: 'Consultoria de Licitação', data: 'Hoje, 14:20', status: 'Novo', statusClass: 'pending' },
-      { nome: 'Ana Beatriz', email: 'ana.b@empresa.com.br', assunto: 'Dúvida Trabalhista', data: 'Hoje, 10:45', status: 'Lido', statusClass: 'active' }
-    ],
-    'Semana': [
-      { nome: 'Carlos Eduardo', email: 'carlos@email.com', assunto: 'Consultoria de Licitação', data: 'Hoje, 14:20', status: 'Novo', statusClass: 'pending' },
-      { nome: 'Ana Beatriz', email: 'ana.b@empresa.com.br', assunto: 'Dúvida Trabalhista', data: 'Hoje, 10:45', status: 'Lido', statusClass: 'active' },
-      { nome: 'Roberto Mendes', email: 'roberto@mendes.adv', assunto: 'Assessoria Mensal', data: 'Ontem', status: 'Lido', statusClass: 'active' },
-      { nome: 'Mariana Costa', email: 'mari@costa.com', assunto: 'Licitação Previdenciária', data: '14/04/2026', status: 'Lido', statusClass: 'active' }
-    ],
-    'Mês': [
-      { nome: 'Carlos Eduardo', email: 'carlos@email.com', assunto: 'Consultoria de Licitação', data: 'Hoje, 14:20', status: 'Novo', statusClass: 'pending' },
-      { nome: 'Ana Beatriz', email: 'ana.b@empresa.com.br', assunto: 'Dúvida Trabalhista', data: 'Hoje, 10:45', status: 'Lido', statusClass: 'active' },
-      { nome: 'Roberto Mendes', email: 'roberto@mendes.adv', assunto: 'Assessoria Mensal', data: 'Ontem', status: 'Lido', statusClass: 'active' },
-      { nome: 'Mariana Costa', email: 'mari@costa.com', assunto: 'Licitação Previdenciária', data: '14/04/2026', status: 'Lido', statusClass: 'active' },
-      { nome: 'João Silva', email: 'joao@silva.com', assunto: 'Contrato Civil', data: '13/04/2026', status: 'Lido', statusClass: 'active' },
-      { nome: 'Fernanda Lima', email: 'fer@lima.adv', assunto: 'Divórcio Consensual', data: '10/04/2026', status: 'Lido', statusClass: 'active' }
-    ],
-    'Personalizado': []
   };
 
   const [startDate, setStartDate] = useState('');
@@ -139,7 +151,7 @@ export default function DashboardPage() {
                     onChange={(e) => setStartDate(e.target.value)}
                     style={{ padding: '0.4rem 0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '0.85rem' }}
                   />
-                  <span style={{ color: '#64748b' }}>até</span>
+                  <span style={{ color: '#000000' }}>até</span>
                   <input 
                     type="date" 
                     value={endDate}
