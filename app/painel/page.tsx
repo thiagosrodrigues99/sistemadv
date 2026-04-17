@@ -43,7 +43,7 @@ export default function LoginPage() {
 
           <form className="login-form" onSubmit={handleSubmit}>
             <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-              <label htmlFor="username" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Usuário</label>
+              <label htmlFor="username" style={{ display: 'block', marginBottom: '0.5rem' }}>Usuário</label>
               <input 
                 type="text" 
                 id="username" 
@@ -55,7 +55,7 @@ export default function LoginPage() {
               />
             </div>
             <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-              <label htmlFor="password" style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Senha</label>
+              <label htmlFor="password" style={{ display: 'block', marginBottom: '0.5rem' }}>Senha</label>
               <input 
                 type="password" 
                 id="password" 
@@ -70,7 +70,6 @@ export default function LoginPage() {
             <button 
               type="submit" 
               className="btn-login" 
-              style={{ marginTop: '2rem', height: '55px', fontSize: '1.1rem' }}
               disabled={loading}
             >
               {loading ? 'Verificando...' : 'Entrar na Conta'}

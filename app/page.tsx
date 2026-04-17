@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function LandingPage() {
   return (
     <div id="app">
-      <header>
+      <header className="main-header">
         <nav>
           <div className="logo">DIOGO<span>.</span></div>
         </nav>
