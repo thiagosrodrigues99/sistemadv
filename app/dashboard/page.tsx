@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 export default function DashboardPage() {
   const [activeFilter, setActiveFilter] = useState('Hoje');
-  const [stats, setStats] = useState({ leads: 0, forms: 0 });
+  const [stats, setStats] = useState({ leads: 0, forms: 0, visitas: 0 });
   const [tableData, setTableData] = useState<Record<string, any[]>>({
     'Hoje': [],
     'Semana': [],
@@ -17,10 +17,12 @@ export default function DashboardPage() {
     // Carregar leads e gerar estatísticas
     const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
     const savedStats = JSON.parse(localStorage.getItem('sistemadv_stats') || '{"forms": 0}');
+    const savedVisits = parseInt(localStorage.getItem('sistemadv_visitas') || '0');
     
     setStats({
       leads: savedLeads.length,
-      forms: savedStats.forms || 0
+      forms: savedStats.forms || 0,
+      visitas: savedVisits
     });
 
     // Mapear leads reais para o formato da tabela
@@ -44,27 +46,27 @@ export default function DashboardPage() {
   // Dados simulados para cada filtro
   const statsData: Record<string, { visitas: string; forms: string; conversao: string; trendV: string; trendF: string; trendC: string }> = {
     'Hoje': { 
-      visitas: '1.284', 
+      visitas: stats.visitas.toString(), 
       forms: stats.forms.toString(), 
-      conversao: '3,2%', 
+      conversao: stats.visitas > 0 ? ((stats.forms / stats.visitas) * 100).toFixed(1) + '%' : '0%', 
       trendV: '+12% hoje', 
-      trendF: '+5 novos hoje',
+      trendF: `+${stats.forms} hoje`,
       trendC: '+0,5% vs. ontem'
     },
     'Semana': { 
-      visitas: '8.432', 
-      forms: '215', 
-      conversao: '2,5%', 
-      trendV: '+8% vs. semana ant.', 
-      trendF: '+24 novos na semana',
-      trendC: '-0,2% vs. semana ant.'
+      visitas: stats.visitas.toString(), 
+      forms: stats.forms.toString(), 
+      conversao: stats.visitas > 0 ? ((stats.forms / stats.visitas) * 100).toFixed(1) + '%' : '0%', 
+      trendV: '+8% vs. sem. ant.', 
+      trendF: `+${stats.forms} na semana`,
+      trendC: '-0,2% vs. sem. ant.'
     },
     'Mês': { 
-      visitas: '35.120', 
+      visitas: stats.visitas.toString(), 
       forms: stats.forms.toString(), 
-      conversao: '2,5%', 
+      conversao: stats.visitas > 0 ? ((stats.forms / stats.visitas) * 100).toFixed(1) + '%' : '0%', 
       trendV: '+15% vs. mês ant.', 
-      trendF: '+112 novos no mês',
+      trendF: `+${stats.forms} no mês`,
       trendC: '+0,1% vs. mês ant.'
     },
     'Personalizado': { 

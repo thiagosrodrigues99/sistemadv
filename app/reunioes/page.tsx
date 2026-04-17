@@ -82,8 +82,29 @@ function MeetingsContent() {
 
   const getStatusColor = (type: string) => {
     if (type === 'court') return '#ef4444'; 
-    if (type === 'client') return '#111234'; 
+    if (type === 'client') return 'var(--primary)'; 
     return '#10b981'; 
+  };
+
+  const holidays: Record<number, Record<number, string>> = {
+    0: { 1: "Confraternização Universal" },
+    1: { 16: "Carnaval", 17: "Carnaval", 18: "Cinzas" },
+    3: { 3: "Sexta-feira Santa", 5: "Páscoa", 21: "Tiradentes" },
+    4: { 1: "Dia do Trabalho" },
+    5: { 4: "Corpus Christi" },
+    6: { 9: "Revolução Constitucionalista (SP)" },
+    8: { 7: "Independência do Brasil" },
+    9: { 12: "Nossa Senhora Aparecida" },
+    10: { 2: "Finados", 15: "Proclamação da República", 20: "Dia da Consciência Negra" },
+    11: { 25: "Natal" }
+  };
+
+  const shortenName = (name: string) => {
+    if (!name) return '';
+    const cleanName = name.replace('Reunião: ', '');
+    const parts = cleanName.split(' ');
+    if (parts.length <= 1) return cleanName;
+    return `${parts[0]} ${parts[parts.length - 1].charAt(0)}.`;
   };
 
   return (
@@ -184,11 +205,17 @@ function MeetingsContent() {
                   key={day} 
                   className={`calendar-day ${isToday ? 'today' : ''}`}
                   onClick={() => handleDayClick(day)}
+                  style={{ background: holidays[currentMonth]?.[day] ? '#fff1f2' : undefined }}
                 >
-                  <div className="day-number">{day}</div>
+                  <div className="day-number" style={{ color: holidays[currentMonth]?.[day] ? '#e11d48' : undefined, fontWeight: holidays[currentMonth]?.[day] ? '700' : undefined }}>{day}</div>
+                  {holidays[currentMonth]?.[day] && (
+                    <div style={{ fontSize: '0.6rem', color: '#e11d48', fontWeight: '600', marginBottom: '4px', textTransform: 'uppercase' }}>
+                      {holidays[currentMonth][day]}
+                    </div>
+                  )}
                   {dayMeetings.map((m, i) => (
-                    <div key={i} className="event-tag" style={{ background: getStatusColor(m.type) }}>
-                      {m.time} - {m.title}
+                    <div key={i} className="event-tag" style={{ background: getStatusColor(m.type), fontSize: '0.65rem', padding: '2px 4px', borderRadius: '4px', marginBottom: '2px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                      {m.time} - {shortenName(m.title)}
                     </div>
                   ))}
                 </div>

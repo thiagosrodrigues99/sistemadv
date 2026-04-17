@@ -1,10 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
 
 export default function LandingPage() {
+  useEffect(() => {
+    // Incrementar contador de visitas
+    const visits = parseInt(localStorage.getItem('sistemadv_visitas') || '0');
+    localStorage.setItem('sistemadv_visitas', (visits + 1).toString());
+  }, []);
   const [formData, setFormData] = useState({
     nome: '',
     telefone: '',

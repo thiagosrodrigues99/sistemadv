@@ -52,6 +52,18 @@ export default function FichaLead() {
     }
   };
 
+  const handleBack = () => {
+    if (lead && lead.status === 'Abrir ficha') {
+      const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
+      const index = savedLeads.findIndex((l: any) => l.id.toString() === params.id);
+      if (index !== -1) {
+        savedLeads[index].status = 'Sem contato';
+        localStorage.setItem('sistemadv_leads', JSON.stringify(savedLeads));
+      }
+    }
+    router.push('/leads');
+  };
+
   if (!lead) return <div style={{ padding: '2rem', textAlign: 'center' }}>Carregando ficha...</div>;
 
   return (
@@ -234,7 +246,7 @@ export default function FichaLead() {
         </section>
 
         <footer style={{ marginTop: '2rem', padding: '2rem 0', borderTop: '2px solid #f1f5f9', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-          <button onClick={() => router.back()} className="btn-secondary" style={{ padding: '0.8rem 2rem' }}>Voltar</button>
+          <button onClick={handleBack} className="btn-secondary" style={{ padding: '0.8rem 2rem' }}>Voltar</button>
           <button onClick={handleSave} className="btn-ficha" style={{ padding: '0.8rem 2.5rem', background: isSaving ? '#94a3b8' : '#111234', color: 'white' }} disabled={isSaving}>
             {isSaving ? 'Salvando...' : 'Salvar Alterações'}
           </button>
