@@ -6,7 +6,9 @@ export default function ReportsPage() {
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
-        <div className="logo" style={{ marginBottom: '2.5rem', fontSize: '1.4rem' }}>DIOGO<span>.</span></div>
+        <div className="logo" style={{ marginBottom: '2.5rem' }}>
+          <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto' }} />
+        </div>
         <ul className="nav-menu" style={{ listStyle: 'none', flexGrow: 1 }}>
           <li className="nav-item" style={{ marginBottom: '0.5rem' }}>
             <Link href="/dashboard" className="nav-link">

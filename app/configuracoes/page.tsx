@@ -6,7 +6,9 @@ export default function SettingsPage() {
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
-        <div className="logo" style={{ marginBottom: '2.5rem', fontSize: '1.4rem' }}>DIOGO<span>.</span></div>
+        <div className="logo" style={{ marginBottom: '2.5rem' }}>
+          <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto' }} />
+        </div>
         <ul className="nav-menu" style={{ listStyle: 'none', flexGrow: 1 }}>
           <li className="nav-item" style={{ marginBottom: '0.5rem' }}>
             <Link href="/dashboard" className="nav-link">
@@ -59,9 +61,6 @@ export default function SettingsPage() {
           <div className="section-header">
             <h3>Configurações de Rastreamento</h3>
           </div>
-          <p style={{ color: '#64748b', marginBottom: '2.5rem', fontSize: '0.95rem' }}>
-            Insira os IDs ou scripts dos respectivos pixels para ativar o rastreamento em suas páginas.
-          </p>
 
           <form style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
@@ -97,12 +96,6 @@ export default function SettingsPage() {
                   style={{ width: '100%', padding: '1rem', borderRadius: '12px', border: '1px solid #cbd5e1', outline: 'none' }}
                 />
               </div>
-            </div>
-
-            <div style={{ marginTop: '1rem', padding: '1.5rem', background: '#f8fafc', borderRadius: '15px', borderLeft: '4px solid #f59e0b' }}>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
-                <strong>Dica:</strong> Certifique-se de salvar as alterações para que os pixels sejam aplicados em todas as suas landing pages.
-              </p>
             </div>
 
             <button 

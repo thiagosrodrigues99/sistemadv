@@ -30,13 +30,14 @@ export default function LoginPage() {
         backgroundSize: 'cover',
         backgroundPosition: 'center'
       }}>
-        <div className="logo" style={{ fontSize: '2.5rem', marginBottom: '2rem', color: 'white' }}>DIOGO<span>.</span></div>
-        <h1 style={{ fontSize: '3.5rem', marginBottom: '1.5rem', color: 'white' }}>A sua gestão <br /><span style={{ color: '#c7d2fe' }}>simplificada</span>.</h1>
-        <p style={{ fontSize: '1.2rem', opacity: 0.9, color: 'white' }}>Entre na plataforma para gerenciar seus processos e clientes com máxima eficiência.</p>
+        <h1 style={{ fontSize: '3.5rem', marginBottom: '1.5rem', color: 'white' }}>Sistema de <br /><span style={{ color: '#c7d2fe' }}>gestão de processos</span></h1>
       </div>
       <div className="login-content" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem' }}>
         <div className="login-inner" style={{ width: '100%', maxWidth: '400px' }}>
           <div className="login-header" style={{ textAlign: 'left', marginBottom: '3rem' }}>
+            <div className="mobile-only-logo" style={{ marginBottom: '2rem', display: 'none' }}>
+               <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto' }} />
+            </div>
             <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Bem-vindo</h2>
             <p style={{ color: 'var(--text-muted)' }}>Por favor, insira seus dados para entrar.</p>
           </div>

@@ -56,19 +56,14 @@ body {
 
 /* HEADER & NAV */
 .main-header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1000;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(15px);
+    background: white;
     border-bottom: 1px solid var(--glass-border);
-    padding: 1rem 0;
+    padding: 0;
 }
 
 nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
@@ -76,10 +71,10 @@ nav {
 }
 
 .logo {
-    font-size: 1.8rem;
-    font-weight: 600;
-    letter-spacing: -1px;
-    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
 }
 
 .logo span {
@@ -121,15 +116,92 @@ nav {
 
 /* HERO SECTION */
 .hero {
-    height: 100vh;
+    min-height: 70vh;
     display: flex;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding-top: 5rem;
+    padding: 0 0 60px;
     position: relative;
     background: radial-gradient(circle at top right, rgba(99, 102, 241, 0.05), transparent),
                 radial-gradient(circle at bottom left, rgba(139, 92, 246, 0.03), transparent);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+@media (max-width: 1024px) {
+    .hero {
+        height: auto;
+        padding-top: 1rem;
+    }
+    
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        text-align: left;
+    }
+    
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left !important;
+    }
+    
+    .hero-actions {
+        justify-content: flex-start !important;
+    }
+    
+    .hero-form-card {
+        text-align: left;
+    }
+    
+    .hero-form-card label {
+        text-align: left;
+        display: block !important;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+.hero-form-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    border: 1px solid #cbd5e1;
+}
+
+@media (max-width: 480px) {
+    .hero-form-card {
+        padding: 1.5rem;
+    }
+    
+    .hero-grid {
+        gap: 2rem;
+    }
+    
+    .form-input {
+        font-size: 16px !important;
+    }
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.form-input:focus {
+    border-color: var(--primary);
 }
 
 h1 {
@@ -151,14 +223,12 @@ h1 {
     color: var(--text-muted);
     margin-bottom: 3rem;
     max-width: 650px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .hero-actions {
     display: flex;
     gap: 1.5rem;
-    justify-content: center;
+    justify-content: flex-start;
 }
 
 .btn-main {
@@ -231,17 +301,53 @@ h1 {
 .login-split {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
-    height: 100vh;
-    overflow: hidden;
+    display: flex;
+    min-height: 100vh;
 }
 
 .login-visual {
-    background: linear-gradient(135deg, rgba(79, 70, 229, 0.9), rgba(124, 58, 237, 0.8));
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 4rem;
+    position: relative;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.9), rgba(124, 58, 237, 0.8));
     color: white;
+}
+
+.login-content {
+    flex: 1;
+    background: white;
+}
+
+@media (max-width: 900px) {
+    .login-split {
+        flex-direction: column;
+    }
+    
+    .login-visual {
+        display: none; /* Esconder a lateral visual no mobile para focar no login */
+    }
+    
+    .login-content {
+        padding: 2rem 1rem !important;
+    }
+    
+    .login-inner {
+        max-width: 100% !important;
+    }
+
+    .mobile-only-logo {
+        display: flex !important;
+        justify-content: center;
+        margin-bottom: 3rem !important;
+    }
+
+    .mobile-only-logo img {
+        height: 150px !important;
+        width: auto;
+    }
 }
 
 .btn-login {

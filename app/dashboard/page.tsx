@@ -65,13 +65,18 @@ export default function DashboardPage() {
     'Personalizado': []
   };
 
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+
   const currentStats = statsData[activeFilter] || statsData['Hoje'];
   const currentTable = tableData[activeFilter] || [];
 
   return (
     <div className="dashboard-layout">
       <aside className="sidebar">
-        <div className="logo" style={{ marginBottom: '2.5rem', fontSize: '1.4rem' }}>DIOGO<span>.</span></div>
+        <div className="logo" style={{ marginBottom: '2.5rem' }}>
+          <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto' }} />
+        </div>
         <ul className="nav-menu" style={{ listStyle: 'none', flexGrow: 1 }}>
           <li className="nav-item" style={{ marginBottom: '0.5rem' }}>
             <Link href="/dashboard" className="nav-link active">
@@ -113,16 +118,36 @@ export default function DashboardPage() {
         <header className="top-bar">
           <div className="title-group">
             <h1>Dashboard Operacional</h1>
-            <div className="filter-group">
-              {['Hoje', 'Semana', 'Mês', 'Personalizado'].map((filter) => (
-                <button 
-                  key={filter}
-                  className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
-                  onClick={() => setActiveFilter(filter)}
-                >
-                  {filter}
-                </button>
-              ))}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
+              <div className="filter-group">
+                {['Hoje', 'Semana', 'Mês', 'Personalizado'].map((filter) => (
+                  <button 
+                    key={filter}
+                    className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
+                    onClick={() => setActiveFilter(filter)}
+                  >
+                    {filter}
+                  </button>
+                ))}
+              </div>
+              
+              {activeFilter === 'Personalizado' && (
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', animation: 'fadeIn 0.3s ease-in' }}>
+                  <input 
+                    type="date" 
+                    value={startDate}
+                    onChange={(e) => setStartDate(e.target.value)}
+                    style={{ padding: '0.4rem 0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '0.85rem' }}
+                  />
+                  <span style={{ color: '#64748b' }}>até</span>
+                  <input 
+                    type="date" 
+                    value={endDate}
+                    onChange={(e) => setEndDate(e.target.value)}
+                    style={{ padding: '0.4rem 0.8rem', borderRadius: '8px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '0.85rem' }}
+                  />
+                </div>
+              )}
             </div>
           </div>
           <div className="user-profile">
@@ -134,17 +159,17 @@ export default function DashboardPage() {
         <section className="stats-grid">
           <div className="stat-card">
             <h4>Visitas na Página</h4>
-            <p className="value">{currentStats.visitas}</p>
+            <p className="value">{activeFilter === 'Personalizado' && (!startDate || !endDate) ? '---' : currentStats.visitas}</p>
             <p className="trend up" style={{ color: '#10b981', fontSize: '0.8rem', marginTop: '0.5rem' }}>{currentStats.trendV}</p>
           </div>
           <div className="stat-card">
             <h4>Formulários Preenchidos</h4>
-            <p className="value">{currentStats.forms}</p>
+            <p className="value">{activeFilter === 'Personalizado' && (!startDate || !endDate) ? '---' : currentStats.forms}</p>
             <p className="trend up" style={{ color: '#10b981', fontSize: '0.8rem', marginTop: '0.5rem' }}>{currentStats.trendF}</p>
           </div>
           <div className="stat-card">
             <h4>Taxa de Conversão</h4>
-            <p className="value">{currentStats.conversao}</p>
+            <p className="value">{activeFilter === 'Personalizado' && (!startDate || !endDate) ? '---' : currentStats.conversao}</p>
             <p className="trend" style={{ fontSize: '0.8rem', marginTop: '0.5rem' }}>{currentStats.trendC}</p>
           </div>
         </section>

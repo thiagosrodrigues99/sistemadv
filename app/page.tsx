@@ -60,20 +60,46 @@ export default function LandingPage() {
 
       <header className="main-header">
         <nav>
-          <div className="logo">DIOGO<span>.</span></div>
+          <div className="logo">
+            <img src="/novo.png" alt="Logo" style={{ height: '100px', width: 'auto', display: 'block' }} />
+          </div>
         </nav>
       </header>
 
       <main>
         {/* HERO SECTION */}
         <section id="inicio" className="hero">
-          <div className="hero-content">
-            <span className="badge">Licitações na Prática</span>
-            <h1>Assessoria jurídica com <br /><span className="gradient-text">visão estratégica</span>.</h1>
-            <p>Atuação técnica aliada à lógica de negócio para transformar seus resultados jurídicos e empresariais.</p>
-            <div className="hero-actions">
-              <a href="#contato" className="btn-main">Falar com Especialista</a>
-              <a href="#areas" className="btn-secondary">Nossas Áreas</a>
+          <div className="container hero-grid">
+            <div className="hero-content">
+              <span className="badge">Licitações na Prática</span>
+              <h1>Assessoria jurídica com <br /><span className="gradient-text">visão estratégica</span>.</h1>
+              <p>Atuação técnica aliada à lógica de negócio para transformar seus resultados jurídicos e empresariais.</p>
+              <div className="hero-actions">
+                <a href="#areas" className="btn-secondary">Nossas Áreas</a>
+              </div>
+            </div>
+
+            <div className="hero-form-card">
+              <h3 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', color: 'var(--primary)', fontWeight: '700' }}>SOLICITAR ANÁLISE INICIAL</h3>
+              <form style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Nome completo</label>
+                  <input type="text" placeholder="Seu nome aqui" className="form-input" />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Telefone</label>
+                  <input type="tel" placeholder="(00) 00000-0000" className="form-input" />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>E-mail</label>
+                  <input type="email" placeholder="seu@email.com" className="form-input" />
+                </div>
+                <div>
+                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>CPF</label>
+                  <input type="text" placeholder="000.000.000-00" className="form-input" />
+                </div>
+                <button type="button" className="btn-main" style={{ width: '100%', marginTop: '0.5rem', padding: '1.2rem', fontWeight: '700', fontSize: '1rem' }}>QUERO SABER QUANTO TENHO PARA RECEBER</button>
+              </form>
             </div>
           </div>
         </section>
@@ -149,8 +175,10 @@ export default function LandingPage() {
       <footer>
         <div className="container">
           <div className="footer-content" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div className="footer-logo">DIOGO<span>.</span></div>
-            <p>&copy; 2026 Diogo | Licitações na Prática. <Link href="/painel" style={{ color: 'inherit', opacity: 0.5, textDecoration: 'none', marginLeft: '10px' }}>Admin Login</Link></p>
+            <div className="footer-logo">
+              <img src="/novo.png" alt="Logo" style={{ height: '70px', width: 'auto', opacity: 0.8 }} />
+            </div>
+            <p>&copy; 2026 | Sistema de Gestão de Processos. <Link href="/painel" style={{ color: 'inherit', opacity: 0.5, textDecoration: 'none', marginLeft: '10px' }}>Admin Login</Link></p>
           </div>
         </div>
       </footer>
