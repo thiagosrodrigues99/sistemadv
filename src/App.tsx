@@ -2,15 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import Dashboard from './pages/Dashboard';
-
-// Placeholders para outras rotas
-const Placeholder = ({ title }: { title: string }) => (
-  <div style={{ padding: '2rem' }}>
-    <h1>{title}</h1>
-    <p>Página em construção para a nova versão Vite.</p>
-    <a href="/dashboard">Voltar para Dashboard</a>
-  </div>
-);
+import Leads from './pages/Leads';
+import Reunioes from './pages/Reunioes';
+import Relatorios from './pages/Relatorios';
+import Settings from './pages/Settings';
+import Ficha from './pages/Ficha';
 
 function App() {
   return (
@@ -19,12 +15,11 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/painel" element={<LoginPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-        
-        {/* Outras rotas */}
-        <Route path="/reunioes" element={<Placeholder title="Reuniões" />} />
-        <Route path="/leads" element={<Placeholder title="Gestão de Leads" />} />
-        <Route path="/relatorios" element={<Placeholder title="Relatórios" />} />
-        <Route path="/configuracoes" element={<Placeholder title="Configurações" />} />
+        <Route path="/leads" element={<Leads />} />
+        <Route path="/reunioes" element={<Reunioes />} />
+        <Route path="/relatorios" element={<Relatorios />} />
+        <Route path="/configuracoes" element={<Settings />} />
+        <Route path="/ficha/:id" element={<Ficha />} />
       </Routes>
     </Router>
   );
