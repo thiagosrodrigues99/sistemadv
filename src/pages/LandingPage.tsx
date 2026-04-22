@@ -47,7 +47,7 @@ export default function LandingPage() {
       <header className="main-header">
         <nav>
           <div className="logo">
-            <img src="/novo.png" alt="Logo" style={{ height: '100px', width: 'auto', display: 'block' }} />
+            <img src="/novo.png" alt="Logo" style={{ height: '130px', width: 'auto', display: 'block' }} />
           </div>
         </nav>
       </header>
@@ -58,7 +58,7 @@ export default function LandingPage() {
           <div className="container hero-grid">
             <div className="hero-content">
               <span className="badge">Licitações na Prática</span>
-              <h1>Assessoria jurídica com <br /><span className="gradient-text">visão estratégica</span>.</h1>
+              <h1>Assessoria jurídica com <br />visão estratégica.</h1>
               <p>Atuação técnica aliada à lógica de negócio para transformar seus resultados jurídicos e empresariais.</p>
               <div className="hero-actions">
                 <a href="#areas" className="btn-secondary">Nossas Áreas</a>
@@ -129,72 +129,202 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* TRUST SECTION */}
+        <section className="trust-section">
+          <div className="container">
+            <div className="trust-wrapper">
+              <div className="trust-badge-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                </svg>
+              </div>
+              <div className="trust-content-text">
+                <h2>GARANTIMOS SEUS DIREITOS COM ATUAÇÃO TÉCNICA E FOCO EM RESULTADO.</h2>
+                <p>Estamos ao seu lado para orientar e conduzir cada etapa com segurança.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* DETAILED SERVICES SECTION */}
+        <section id="servicos" className="section" style={{ background: '#ffffff', paddingBottom: '0' }}>
+          <div className="container">
+            <h2 className="section-title">Nossas Soluções em Destaque</h2>
+            <div className="cards-grid">
+              {/* CARD 1: LOAS */}
+              <div className="card service-card">
+                <div className="card-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
+                </div>
+                <h3>LOAS (BPC)</h3>
+                <ul className="card-checklist">
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Idoso ou pessoa com deficiência em situação de baixa renda</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Pessoa com deficiência, Não consegue trabalhar ou se sustentar sozinho</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Benefício negado pelo INSS</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Mora com a família e teve o pedido recusado, mesmo com renda na casa, ainda passa dificuldade</span>
+                  </li>
+                </ul>
+                <a href="#inicio" className="btn-card">Consultar meu caso</a>
+              </div>
+
+              {/* CARD 2: AUXÍLIO-ACIDENTE */}
+              <div className="card service-card">
+                <div className="card-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                </div>
+                <h3>Auxílio-Acidente</h3>
+                <ul className="card-checklist">
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Redução da capacidade / Sequela permanente ou parcial</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Recebeu auxílio-doença e ele foi cortado</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>INSS negou o auxílio</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Sofreu acidente e não recebeu nada</span>
+                  </li>
+                </ul>
+                <a href="#inicio" className="btn-card">Consultar meu caso</a>
+              </div>
+
+              {/* CARD 3: APOSENTADORIA */}
+              <div className="card service-card">
+                <div className="card-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <h3>Aposentadoria</h3>
+                <ul className="card-checklist">
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Tempo de contribuição</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Aposentadoria especial</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Revisão de benefício</span>
+                  </li>
+                  <li>
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>Já tem idade, mas não consegue se aposentar</span>
+                  </li>
+                </ul>
+                <a href="#inicio" className="btn-card">Consultar meu caso</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* AREAS SECTION */}
         <section id="areas" className="section">
           <div className="container">
-            <h2 className="section-title">Nossas Especialidades</h2>
+            <h2 className="section-title">Áreas de Atuação</h2>
             <div className="cards-grid">
               <div className="card">
                 <div className="card-icon">
                   <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 7V6a6 6 0 0112 0v1M3 7h18l-1 13H4L3 7z" /></svg>
                 </div>
-                <h3>Trabalhista</h3>
-                <p>Defesa preventiva e contenciosa focada em mitigar riscos empresariais.</p>
-              </div>
-              <div className="card">
-                <div className="card-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                </div>
-                <h3>Previdenciário</h3>
-                <p>Análise técnica para garantir os melhores benefícios e direitos acumulados.</p>
+                <h3>Direito Trabalhista</h3>
+                <p>Atuação em questões envolvendo relações de trabalho, verbas rescisórias, direitos do trabalhador e conflitos trabalhistas em geral.</p>
               </div>
               <div className="card">
                 <div className="card-icon">
                   <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                 </div>
-                <h3>Civil</h3>
-                <p>Soluções contratuais e responsabilidade civil com foco em proteção patrimonial.</p>
+                <h3>Direito Civil</h3>
+                <p>Atuação em demandas diversas do dia a dia, com foco em orientação, prevenção e resolução de conflitos.</p>
+              </div>
+              <div className="card">
+                <div className="card-icon">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                </div>
+                <h3>Direito Previdenciário</h3>
+                <p>Atuação em benefícios do INSS, aposentadorias, auxílios e demais demandas relacionadas à seguridade social.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* IMPACT IMAGE SECTION */}
-        <section className="section-image">
+
+        {/* BIO SECTION */}
+        <section id="advogado" className="section bio-section">
           <div className="container">
-            <div className="image-wrapper animate-float">
-              <img src="/assets/legal_justice.png" alt="Justiça Premium" id="main-asset" style={{ width: '100%', height: 'auto', display: 'block' }} />
+            <div className="bio-grid">
+              <div className="bio-image-container">
+                <div className="bio-photo-placeholder">
+                  <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
+                  <span>Espaço para Foto</span>
+                </div>
+              </div>
+              <div className="bio-content">
+                <h2 className="bio-title">Profissional Responsável</h2>
+                <div className="bio-header">
+                  <h3>Dr. Jaime S.S</h3>
+                  <span className="bio-oab">OAB/SP 353.322</span>
+                </div>
+                <div className="bio-text">
+                  <p className="highlight">Desde 2016 a Atuação do Dr. Jaime de Souza Silva é construída com base em um propósito claro: oferecer orientação jurídica acessível, com atenção real às necessidades de cada cliente.</p>
+                  <p>Com experiência nas áreas previdenciária, trabalhista e civil, seu trabalho é voltado para conduzir cada caso com organização, clareza e responsabilidade.</p>
+                  <p>Mais do que tratar processos, o atendimento é feito de forma próxima, acompanhando cada etapa com transparência e compromisso, do início ao fim.</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* LAWYERS SECTION */}
-        <section id="quem" className="section">
+        {/* FAQ SECTION */}
+        <section id="faq" className="section faq-section" style={{ background: '#f8fafc' }}>
           <div className="container">
-            <h2 className="section-title">Nossa Liderança</h2>
-            <div className="advogados-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-              <div className="adv-card">
-                <h3>Diogo</h3>
-                <p className="adv-bio">Atuação estratégica voltada a empresas, com foco em licitações e estruturação jurídica sob medida.</p>
-                <span className="oab">OAB/SP XXXXX</span>
+            <h2 className="section-title">Perguntas Frequentes</h2>
+            <div className="faq-grid">
+              <div className="faq-item">
+                <h3>Preciso pagar algo para dar entrada no pedido?</h3>
+                <p>Não. A análise inicial é feita sem custo, e os honorários são alinhados de forma transparente antes de qualquer avanço.</p>
               </div>
-              <div className="adv-card">
-                <h3>Parceiro Estratégico</h3>
-                <p className="adv-bio">Atuação técnica qualificada nas áreas trabalhista, civil e previdenciária com foco em resultados.</p>
-                <span className="oab">OAB/SP XXXXX</span>
+              <div className="faq-item">
+                <h3>Quando vou ter custos no processo?</h3>
+                <p>Os custos são definidos conforme o caso, sendo cobrados de forma clara e, em muitos casos, apenas ao final do processo, em caso de êxito.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Quais tipos de casos vocês atendem?</h3>
+                <p>Atuamos nas áreas previdenciária, trabalhista e civil, atendendo desde benefícios do INSS até demandas do dia a dia que exigem orientação jurídica.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Tenho direito ao benefício ou ação?</h3>
+                <p>Cada situação precisa ser analisada individualmente. Por isso, realizamos uma avaliação completa antes de orientar o melhor caminho.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Quanto tempo demora um processo?</h3>
+                <p>O tempo pode variar conforme o tipo de caso e o andamento do órgão responsável, mas acompanhamos todas as etapas para dar o máximo de agilidade possível.</p>
+              </div>
+              <div className="faq-item">
+                <h3>Vocês atendem na minha cidade?</h3>
+                <p>Sim. O atendimento pode ser feito de forma digital, permitindo acompanhar seu caso de qualquer lugar com praticidade.</p>
               </div>
             </div>
           </div>
         </section>
 
-        {/* CONTACT SECTION */}
-        <section id="contato" className="cta-section">
-          <div className="cta-box">
-            <h2>Pronto para elevar seu jurídico?</h2>
-            <p>Agende uma conversa direta pelo WhatsApp.</p>
-            <a href="https://wa.me/seunumeroaqui" className="btn-main large">Falar agora no WhatsApp</a>
-          </div>
-        </section>
       </main>
 
       <footer>
@@ -208,10 +338,6 @@ export default function LandingPage() {
         </div>
       </footer>
 
-      {/* WhatsApp Floating Button */}
-      <a href="https://wa.me/seunumeroaqui" className="whatsapp-float" target="_blank" rel="noopener noreferrer">
-        <svg fill="currentColor" viewBox="0 0 24 24" style={{ width: '35px', height: '35px' }}><path d="M12.031 6.172c-2.203 0-4.007 1.796-4.007 3.991 0 .44.077.864.218 1.259l-.242.883.905-.238c.381.127.787.195 1.206.195 2.203 0 4.006-1.796 4.006-3.991 0-2.195-1.803-3.991-4.006-3.991zm2.38 5.437l-.544-.271c-.131-.065-.24-.09-.34-.09-.16 0-.3.07-.4.18l-.205.24c-.055.065-.13.095-.21.095-.04 0-.085-.01-.125-.03-.13-.06-.55-.225-1.045-.665-.385-.34-.645-.76-.72-.89-.045-.075-.035-.115.01-.16l.165-.19c.045-.05.06-.09.06-.15 0-.06-.03-.12-.06-.18l-.27-.645c-.06-.15-.12-.185-.225-.185h-.18c-.1 0-.27.04-.41.19-.135.15-.525.51-.525 1.245 0 .735.535 1.44 1.155 2.2 1.415 1.735 2.955 2.115 3.515 2.115.425 0 .81-.19 1.05-.51l.24-.315c.08-.105.11-.18.11-.27 0-.09-.03-.14-.06-.19s-.27-.27-.51-.39z" /></svg>
-      </a>
     </div>
   );
 }
