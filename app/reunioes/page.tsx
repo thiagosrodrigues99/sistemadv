@@ -43,7 +43,7 @@ function MeetingsContent() {
     setAllLeads(savedLeads);
 
     if (Object.keys(savedMeetings).length === 0) {
-      const initialMeetings = {
+      const initialMeetings: Record<number, Array<{ time: string; title: string; type: 'client' | 'court' | 'internal'; leadId?: any }>> = {
         16: [{ time: '14:00', title: 'Consultoria Cliente X', type: 'client' }],
         18: [{ time: '10:30', title: 'Audiência Tribunal', type: 'court' }],
         20: [{ time: '09:00', title: 'Reunião de Equipe', type: 'internal' }]
