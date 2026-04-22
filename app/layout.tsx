@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Diogo | Licitações na Prática",
+  title: "JSS Advocacia",
   description: "Assessoria Jurídica Estratégica em Licitações e Contratos Administrativos",
   icons: {
     icon: "/logo.png",
