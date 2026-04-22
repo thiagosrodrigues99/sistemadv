@@ -7,6 +7,17 @@ export const metadata: Metadata = {
   icons: {
     icon: "/logo.png",
   },
+  openGraph: {
+    title: "JSS Advocacia",
+    description: "Assessoria Jurídica Estratégica em Licitações e Contratos Administrativos",
+    images: ["/logo.png"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JSS Advocacia",
+    description: "Assessoria Jurídica Estratégica em Licitações e Contratos Administrativos",
+    images: ["/logo.png"],
+  },
 };
 
 export default function RootLayout({
