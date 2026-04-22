@@ -3,19 +3,21 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "JSS Advocacia",
-  description: "Assessoria Jurídica Estratégica em Licitações e Contratos Administrativos",
+  description: "JSS Advocacia",
   icons: {
     icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
   },
   openGraph: {
     title: "JSS Advocacia",
-    description: "Assessoria Jurídica Estratégica em Licitações e Contratos Administrativos",
+    description: "JSS Advocacia",
     images: ["/logo.png"],
   },
   twitter: {
     card: "summary_large_image",
     title: "JSS Advocacia",
-    description: "Assessoria Jurídica Estratégica em Licitações e Contratos Administrativos",
+    description: "JSS Advocacia",
     images: ["/logo.png"],
   },
 };
