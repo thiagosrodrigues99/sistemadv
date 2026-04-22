@@ -4,6 +4,9 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Diogo | Licitações na Prática",
   description: "Assessoria Jurídica Estratégica em Licitações e Contratos Administrativos",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
