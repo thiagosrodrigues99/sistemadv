@@ -1,10 +1,8 @@
-'use client';
-
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useNavigate, Link } from 'react-router-dom';
 
 export default function LoginPage() {
-  const router = useRouter();
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,7 +13,7 @@ export default function LoginPage() {
 
     setTimeout(() => {
       if (username === 'admin' && password === 'admin') {
-        router.push('/dashboard');
+        navigate('/dashboard');
       } else {
         alert('Usuário ou senha incorretos! (Tente admin/admin)');
         setLoading(false);
@@ -77,7 +75,7 @@ export default function LoginPage() {
             </button>
           </form>
 
-          <a href="/" style={{ display: 'block', textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-muted)', textDecoration: 'none' }}>← Voltar para a Landing Page</a>
+          <Link to="/" style={{ display: 'block', textAlign: 'center', marginTop: '2rem', fontSize: '0.9rem', color: 'var(--text-muted)', textDecoration: 'none' }}>← Voltar para a Landing Page</Link>
         </div>
       </div>
     </div>
