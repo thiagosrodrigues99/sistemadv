@@ -7,6 +7,7 @@ import Reunioes from './pages/Reunioes';
 import Relatorios from './pages/Relatorios';
 import Settings from './pages/Settings';
 import Ficha from './pages/Ficha';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -14,12 +15,14 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/painel" element={<LoginPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/leads" element={<Leads />} />
-        <Route path="/reunioes" element={<Reunioes />} />
-        <Route path="/relatorios" element={<Relatorios />} />
-        <Route path="/configuracoes" element={<Settings />} />
-        <Route path="/ficha/:id" element={<Ficha />} />
+        
+        {/* Rotas Protegidas */}
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/leads" element={<ProtectedRoute><Leads /></ProtectedRoute>} />
+        <Route path="/reunioes" element={<ProtectedRoute><Reunioes /></ProtectedRoute>} />
+        <Route path="/relatorios" element={<ProtectedRoute><Relatorios /></ProtectedRoute>} />
+        <Route path="/configuracoes" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        <Route path="/ficha/:id" element={<ProtectedRoute><Ficha /></ProtectedRoute>} />
       </Routes>
     </Router>
   );

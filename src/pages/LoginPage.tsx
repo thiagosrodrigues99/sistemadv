@@ -1,24 +1,37 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
-    setTimeout(() => {
-      if (username === 'admin' && password === 'admin') {
+    // Ajuste para permitir login sem precisar digitar o @
+    const email = username.includes('@') ? username : `${username}@adv.com.br`;
+
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (authError) throw authError;
+
+      if (data.user) {
         navigate('/dashboard');
-      } else {
-        alert('Usuário ou senha incorretos! (Tente admin/admin)');
-        setLoading(false);
       }
-    }, 800);
+    } catch (err: any) {
+      setError('Usuário ou senha incorretos.');
+      setLoading(false);
+    }
   };
 
   return (
@@ -41,12 +54,24 @@ export default function LoginPage() {
           </div>
 
           <form className="login-form" onSubmit={handleSubmit}>
+            {error && (
+              <div style={{ 
+                padding: '0.8rem', 
+                borderRadius: '8px', 
+                backgroundColor: '#fee2e2', 
+                color: '#b91c1c', 
+                fontSize: '0.85rem', 
+                marginBottom: '1.5rem' 
+              }}>
+                {error}
+              </div>
+            )}
             <div className="form-group" style={{ marginBottom: '1.5rem' }}>
               <label htmlFor="username" style={{ display: 'block', marginBottom: '0.5rem' }}>Usuário</label>
               <input 
                 type="text" 
                 id="username" 
-                placeholder="nome_usuario" 
+                placeholder="thiago" 
                 required 
                 style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', border: '1px solid var(--glass-border)' }}
                 value={username}
