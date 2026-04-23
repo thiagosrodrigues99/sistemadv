@@ -6,6 +6,25 @@ export default function LandingPage() {
     // Incrementar contador de visitas
     const visits = parseInt(localStorage.getItem('sistemadv_visitas') || '0');
     localStorage.setItem('sistemadv_visitas', (visits + 1).toString());
+
+    // Animação de revelação ao scroll
+    const observerOptions = {
+      threshold: 0.15,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, observerOptions);
+
+    const revealElements = document.querySelectorAll('.reveal');
+    revealElements.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
   }, []);
 
   const [formData, setFormData] = useState({
@@ -57,9 +76,8 @@ export default function LandingPage() {
         <section id="inicio" className="hero">
           <div className="container hero-grid">
             <div className="hero-content">
-              <span className="badge">Licitações na Prática</span>
-              <h1>Assessoria jurídica com <br />visão estratégica.</h1>
-              <p>Atuação técnica aliada à lógica de negócio para transformar seus resultados jurídicos e empresariais.</p>
+              <h1>VAMOS JUNTOS GARANTIR O DIREITO AO SEU BENEFÍCIO</h1>
+              <p>Sem custos iniciais, não cobramos nenhum valor de forma antecipada. <br />Você só paga quando o dinheiro estiver na sua conta.</p>
               <div className="hero-actions">
                 <a href="#areas" className="btn-secondary">Nossas Áreas</a>
               </div>
@@ -130,7 +148,7 @@ export default function LandingPage() {
         </section>
 
         {/* TRUST SECTION */}
-        <section className="trust-section">
+        <section className="trust-section reveal">
           <div className="container">
             <div className="trust-wrapper">
               <div className="trust-badge-icon">
@@ -147,9 +165,9 @@ export default function LandingPage() {
         </section>
 
         {/* DETAILED SERVICES SECTION */}
-        <section id="servicos" className="section" style={{ background: '#ffffff', paddingBottom: '0' }}>
+        <section id="servicos" className="section reveal" style={{ background: '#ffffff', paddingBottom: '0' }}>
           <div className="container">
-            <h2 className="section-title">Nossas Soluções em Destaque</h2>
+            <h2 className="section-title">SOMOS ESPECIALISTAS EM:</h2>
             <div className="cards-grid">
               {/* CARD 1: LOAS */}
               <div className="card service-card">
@@ -236,9 +254,9 @@ export default function LandingPage() {
         </section>
 
         {/* AREAS SECTION */}
-        <section id="areas" className="section">
+        <section id="areas" className="section reveal">
           <div className="container">
-            <h2 className="section-title">Áreas de Atuação</h2>
+            <h2 className="section-title">ÁREAS DE ATUAÇÃO:</h2>
             <div className="cards-grid">
               <div className="card">
                 <div className="card-icon">
@@ -267,14 +285,11 @@ export default function LandingPage() {
 
 
         {/* BIO SECTION */}
-        <section id="advogado" className="section bio-section">
+        <section id="advogado" className="section bio-section reveal">
           <div className="container">
             <div className="bio-grid">
-              <div className="bio-image-container">
-                <div className="bio-photo-placeholder">
-                  <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" /></svg>
-                  <span>Espaço para Foto</span>
-                </div>
+              <div className="bio-image-wrapper">
+                <img src="/IMG_7969.JPG.jpeg" alt="Dr. Jaime S.S" className="bio-photo" />
               </div>
               <div className="bio-content">
                 <h2 className="bio-title">Profissional Responsável</h2>
@@ -293,7 +308,7 @@ export default function LandingPage() {
         </section>
 
         {/* FAQ SECTION */}
-        <section id="faq" className="section faq-section" style={{ background: '#f8fafc' }}>
+        <section id="faq" className="section faq-section reveal" style={{ background: '#f8fafc' }}>
           <div className="container">
             <h2 className="section-title">Perguntas Frequentes</h2>
             <div className="faq-grid">
