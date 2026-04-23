@@ -96,7 +96,7 @@ export default function LandingPage() {
       <header className="main-header">
         <nav>
           <div className="logo">
-            <img src="/novo.png" alt="Logo" style={{ height: '130px', width: 'auto', display: 'block' }} />
+            <img src="/novo.png" alt="Logo" className="logo-img" />
           </div>
         </nav>
       </header>
@@ -107,18 +107,16 @@ export default function LandingPage() {
           <div className="container hero-grid">
             <div className="hero-content">
               <h1>VAMOS JUNTOS GARANTIR O DIREITO AO SEU BENEFÍCIO</h1>
-              <p>Sem custos iniciais, não cobramos nenhum valor de forma antecipada. <br />Você só paga quando o dinheiro estiver na sua conta.</p>
-              <div className="hero-actions">
-                <a href="#areas" className="btn-secondary">Nossas Áreas</a>
-              </div>
+              <p>Sem custos iniciais, não cobramos nenhum valor de forma antecipada.</p>
             </div>
 
             <div className="hero-form-card">
               <h3 style={{ marginBottom: '1.5rem', fontSize: '1.5rem', color: 'var(--primary)', fontWeight: '700' }}>SOLICITAR ANÁLISE INICIAL</h3>
-              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+              <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Nome completo</label>
+                  <label htmlFor="nome" style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)' }}>NOME COMPLETO</label>
                   <input 
+                    id="nome"
                     type="text" 
                     placeholder="Seu nome aqui" 
                     className="form-input" 
@@ -128,19 +126,29 @@ export default function LandingPage() {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Telefone</label>
+                  <label htmlFor="telefone" style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)' }}>TELEFONE</label>
                   <input 
+                    id="telefone"
                     type="tel" 
                     placeholder="(00) 00000-0000" 
                     className="form-input" 
                     required
                     value={formData.telefone}
-                    onChange={(e) => setFormData({...formData, telefone: e.target.value})}
+                    onChange={(e) => {
+                      let val = e.target.value.replace(/\D/g, '');
+                      if (val.length <= 11) {
+                        val = val.replace(/^(\d{2})(\d)/g, '($1) $2');
+                        val = val.replace(/(\d{5})(\d)/, '$1-$2');
+                      }
+                      setFormData({...formData, telefone: val});
+                    }}
+                    maxLength={15}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>E-mail</label>
+                  <label htmlFor="email" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)' }}>E-MAIL</label>
                   <input 
+                    id="email"
                     type="email" 
                     placeholder="seu@email.com" 
                     className="form-input" 
@@ -150,19 +158,30 @@ export default function LandingPage() {
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>CPF</label>
+                  <label htmlFor="cpf" style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)' }}>CPF</label>
                   <input 
+                    id="cpf"
                     type="text" 
                     placeholder="000.000.000-00" 
                     className="form-input" 
                     required
                     value={formData.cpf}
-                    onChange={(e) => setFormData({...formData, cpf: e.target.value})}
+                    onChange={(e) => {
+                      let val = e.target.value.replace(/\D/g, '');
+                      if (val.length <= 11) {
+                        val = val.replace(/(\d{3})(\d)/, '$1.$2');
+                        val = val.replace(/(\d{3})(\d)/, '$1.$2');
+                        val = val.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                      }
+                      setFormData({...formData, cpf: val});
+                    }}
+                    maxLength={14}
                   />
                 </div>
                 <div>
-                  <label style={{ display: 'block', marginBottom: '0.5rem', fontSize: '0.9rem', fontWeight: 500 }}>Conte um pouco sobre o acidente</label>
+                  <label htmlFor="mensagem" style={{ display: 'block', marginBottom: '0.4rem', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)' }}>CONTE UM POUCO SOBRE O ACIDENTE</label>
                   <textarea 
+                    id="mensagem"
                     placeholder="Descreva brevemente o ocorrido..." 
                     className="form-input" 
                     style={{ minHeight: '120px', resize: 'vertical' }}
@@ -171,7 +190,12 @@ export default function LandingPage() {
                     onChange={(e) => setFormData({...formData, mensagem: e.target.value})}
                   ></textarea>
                 </div>
-                <button type="submit" className="btn-main" style={{ width: '100%', marginTop: '0.5rem', padding: '1.2rem', fontWeight: '700', fontSize: '1rem' }}>QUERO SABER QUANTO TENHO PARA RECEBER</button>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', textAlign: 'center', margin: '0', lineHeight: '1.2' }}>
+                    Você só paga quando o dinheiro estiver na sua conta.
+                  </p>
+                  <button type="submit" className="btn-main" style={{ width: '100%', padding: '1.2rem', fontWeight: '700', fontSize: '1rem' }}>QUERO SABER QUANTO TENHO PARA RECEBER</button>
+                </div>
               </form>
             </div>
           </div>
@@ -195,9 +219,9 @@ export default function LandingPage() {
         </section>
 
         {/* DETAILED SERVICES SECTION */}
-        <section id="servicos" className="section reveal" style={{ background: '#ffffff', paddingBottom: '0' }}>
+        <section id="servicos" className="section reveal" style={{ background: 'var(--primary)' }}>
           <div className="container">
-            <h2 className="section-title">SOMOS ESPECIALISTAS EM:</h2>
+            <h2 className="section-title" style={{ color: 'white' }}>SOMOS ESPECIALISTAS EM:</h2>
             <div className="cards-grid">
               {/* CARD 1: LOAS */}
               <div className="card service-card">
@@ -318,15 +342,17 @@ export default function LandingPage() {
         <section id="advogado" className="section bio-section reveal">
           <div className="container">
             <div className="bio-grid">
-              <div className="bio-image-wrapper">
-                <img src="/IMG_7969.JPG.jpeg" alt="Dr. Jaime S.S" className="bio-photo" />
-              </div>
-              <div className="bio-content">
+              <div className="bio-header">
                 <h2 className="bio-title">Profissional Responsável</h2>
-                <div className="bio-header">
-                  <h3>Dr. Jaime S.S</h3>
-                  <span className="bio-oab">OAB/SP 353.322</span>
-                </div>
+                <h3>Dr. Jaime S.S</h3>
+                <span className="bio-oab">OAB/SP 353.322</span>
+              </div>
+              
+              <div className="bio-image-wrapper">
+                <img src="/jaime.png" alt="Dr. Jaime S.S" className="bio-photo" />
+              </div>
+
+              <div className="bio-content">
                 <div className="bio-text">
                   <p className="highlight">Desde 2016 a Atuação do Dr. Jaime de Souza Silva é construída com base em um propósito claro: oferecer orientação jurídica acessível, com atenção real às necessidades de cada cliente.</p>
                   <p>Com experiência nas áreas previdenciária, trabalhista e civil, seu trabalho é voltado para conduzir cada caso com organização, clareza e responsabilidade.</p>
@@ -372,14 +398,12 @@ export default function LandingPage() {
 
       </main>
 
-      <footer>
-        <div className="container">
-          <div className="footer-content" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div className="footer-logo">
-              <img src="/novo.png" alt="Logo" style={{ height: '70px', width: 'auto', opacity: 0.8 }} />
-            </div>
-            <p>&copy; 2026 | Sistema de Gestão de Processos. <Link to="/painel" style={{ color: 'inherit', opacity: 0.5, textDecoration: 'none', marginLeft: '10px' }}>Admin Login</Link></p>
+      <footer style={{ padding: '4rem 0', background: '#f8fafc', borderTop: '1px solid #e2e8f0' }}>
+        <div className="container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
+          <div className="footer-logo">
+            <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto', opacity: 0.9 }} />
           </div>
+          <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>&copy; 2026 JSS Advocacia. Todos os direitos reservados.</p>
         </div>
       </footer>
 

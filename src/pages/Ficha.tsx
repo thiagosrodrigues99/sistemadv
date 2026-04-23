@@ -100,8 +100,24 @@ export default function FichaPage() {
               <input type="text" value={lead.especialista} onChange={e => setLead({...lead, especialista: e.target.value})} style={inputStyle} placeholder="Nome do advogado/estagiário" /></div>
           </div>
           <div style={grid3Style}>
-            <div style={inputGroupStyle}><label style={labelStyle}>CPF</label>
-              <input type="text" value={lead.cpf} onChange={e => setLead({...lead, cpf: e.target.value})} style={inputStyle} /></div>
+            <div style={inputGroupStyle}>
+              <label style={labelStyle}>CPF</label>
+              <input 
+                type="text" 
+                value={lead.cpf} 
+                onChange={e => {
+                  let val = e.target.value.replace(/\D/g, '');
+                  if (val.length <= 11) {
+                    val = val.replace(/(\d{3})(\d)/, '$1.$2');
+                    val = val.replace(/(\d{3})(\d)/, '$1.$2');
+                    val = val.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                  }
+                  setLead({...lead, cpf: val});
+                }} 
+                maxLength={14}
+                style={inputStyle} 
+              />
+            </div>
             <div style={inputGroupStyle}><label style={labelStyle}>RG</label>
               <input type="text" value={lead.rg} onChange={e => setLead({...lead, rg: e.target.value})} style={inputStyle} /></div>
             <div style={inputGroupStyle}><label style={labelStyle}>ORGÃO EMISSOR</label>
