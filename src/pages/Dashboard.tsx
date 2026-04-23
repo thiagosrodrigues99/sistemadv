@@ -95,7 +95,7 @@ export default function DashboardPage() {
         // Disparar notificação visual
         if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
           try {
-            new Notification("🚨 Novo Lead Recebido!", {
+            new Notification("Novo formulário preenchido 🎉", {
               body: `Nome: ${payload.new.nome}\nTelefone: ${payload.new.telefone}`,
               icon: "/logo.png",
               tag: 'new-lead'
