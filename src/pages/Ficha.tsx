@@ -286,7 +286,7 @@ export default function FichaPage() {
           }
           
           /* Esconder elementos da web */
-          footer, .btn-secondary, .btn-ficha, aside, .sidebar, .top-bar { display: none !important; }
+          footer, .btn-secondary, .btn-ficha, .btn-primary, aside, .sidebar, .top-bar, button { display: none !important; }
           
           body {
             background: white !important;
