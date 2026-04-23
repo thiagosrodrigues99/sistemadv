@@ -252,7 +252,7 @@ export default function FichaPage() {
         </section>
 
         <footer style={{ marginTop: '2rem', padding: '2rem 0', borderTop: '2px solid #f1f5f9', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-          <button onClick={handleBack} className="btn-secondary" style={{ padding: '0.8rem 2rem', border: '1px solid #cbd5e1', borderRadius: '8px', cursor: 'pointer', background: 'white' }}>Voltar</button>
+          <button onClick={handleBack} className="btn-secondary" style={{ padding: '0.8rem 2rem', border: '1px solid #cbd5e1', borderRadius: '8px', cursor: 'pointer', background: 'white', color: '#1e293b', fontWeight: '500' }}>Voltar</button>
           <button onClick={handleSave} className="btn-ficha" style={{ padding: '0.8rem 2.5rem', background: isSaving ? '#94a3b8' : '#111234', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }} disabled={isSaving}>
             {isSaving ? 'Salvando...' : 'Salvar Alterações'}
           </button>
@@ -295,6 +295,7 @@ export default function FichaPage() {
           }
 
           .ficha-master { 
+            zoom: 0.82;
             background: white !important;
             padding: 0 !important; 
             margin: 0 !important;
@@ -309,9 +310,13 @@ export default function FichaPage() {
             margin: 0 !important;
             width: 100% !important;
             max-width: none !important;
+            display: block !important;
+            column-count: 2 !important;
+            column-gap: 0.5cm !important;
           }
 
           header {
+            column-span: all;
             margin-bottom: 0.5cm !important;
             padding-bottom: 0.3cm !important;
             display: flex !important;
