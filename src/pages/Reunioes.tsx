@@ -142,13 +142,13 @@ function MeetingsContent() {
             </div>
           </div>
 
-          <div className="calendar-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '1px', background: '#f1f5f9', border: '1px solid #f1f5f9', borderRadius: '12px', overflow: 'hidden' }}>
+          <div className="calendar-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px', background: '#e2e8f0', border: '3px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden' }}>
             {weekDays.map(day => (
               <div key={day} className="calendar-day-head" style={{ background: '#f8fafc', padding: '1rem', textAlign: 'center', fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>{day}</div>
             ))}
             
             {blanks.map(b => (
-              <div key={`blank-${b}`} className="calendar-day empty" style={{ background: '#f8fafc', minHeight: '120px' }}></div>
+              <div key={`blank-${b}`} className="calendar-day empty" style={{ background: '#f8fafc', minHeight: '150px' }}></div>
             ))}
 
             {days.map(day => {
@@ -161,7 +161,7 @@ function MeetingsContent() {
                   onClick={() => handleDayClick(day)}
                   style={{ 
                     background: holidays[currentMonth]?.[day] ? '#fff1f2' : (isToday ? '#f0f9ff' : 'white'),
-                    minHeight: '120px',
+                    minHeight: '150px',
                     padding: '0.8rem',
                     cursor: 'pointer',
                     transition: 'all 0.2s',
