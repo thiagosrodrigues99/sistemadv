@@ -60,8 +60,8 @@ export default function FichaPage() {
       <div className="ficha-container" style={{ maxWidth: '1000px', margin: '0 auto', background: 'white', padding: '3rem', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
         
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', borderBottom: '2px solid #111234', paddingBottom: '1.5rem' }}>
-          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-            <img src="/logo.png" alt="Logo" style={{ height: '60px' }} onError={(e) => e.currentTarget.style.display='none'} />
+          <div style={{ display: 'flex', gap: '2rem', alignItems: 'center' }}>
+            <img src="/logo.png" alt="Logo" style={{ height: '120px' }} onError={(e) => e.currentTarget.src='/novo.png'} />
             <div>
               <h1 style={{ fontSize: '1.5rem', color: '#111234', margin: 0, fontWeight: 'bold' }}>FICHA DO CLIENTE</h1>
             </div>
@@ -328,7 +328,7 @@ export default function FichaPage() {
             border-bottom: 2px solid #111234 !important;
           }
 
-          header img { height: 70px !important; }
+          header img { height: 110px !important; }
           header h1 { font-size: 1.2rem !important; margin: 0 !important; color: #111234 !important; }
           header p { font-size: 0.7rem !important; margin: 0 !important; color: #333 !important; }
 
