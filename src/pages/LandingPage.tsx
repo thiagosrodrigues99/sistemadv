@@ -25,7 +25,16 @@ export default function LandingPage() {
     const revealElements = document.querySelectorAll('.reveal');
     revealElements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect();
+    // Bloquear prompt de instalação do PWA na Landing Page
+    const preventInstall = (e: any) => {
+      e.preventDefault();
+    };
+    window.addEventListener('beforeinstallprompt', preventInstall);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('beforeinstallprompt', preventInstall);
+    };
   }, []);
 
   const [formData, setFormData] = useState({

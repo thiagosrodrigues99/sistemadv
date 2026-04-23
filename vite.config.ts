@@ -12,10 +12,12 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['logo.png', 'novo.png'],
       manifest: {
-        name: 'Sistema Advocacia',
-        short_name: 'SistemADV',
+        name: 'JSS Advocacia',
+        short_name: 'JSS Advocacia',
         description: 'Sistema de Gestão de Leads e Fichas Jurídicas',
         theme_color: '#111234',
+        start_url: '/painel',
+        display: 'standalone',
         icons: [
           {
             src: 'logo.png',
