@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 
 export default function LeadsPage() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [activeStatus, setActiveStatus] = useState('Todos');
@@ -94,7 +95,8 @@ export default function LeadsPage() {
 
   return (
     <div className="dashboard-layout">
-      <Sidebar />
+      <div className={`sidebar-overlay ${isSidebarOpen ? 'open' : ''}`} onClick={() => setIsSidebarOpen(false)}></div>
+      <Sidebar isOpen={isSidebarOpen} onItemClick={() => setIsSidebarOpen(false)} />
 
       {/* Detalhes do Lead (Modal) */}
       {selectedLead && (
@@ -169,7 +171,12 @@ export default function LeadsPage() {
       <main className="main-content">
         <header className="top-bar">
           <div className="title-group">
-            <h1>Gestão de Leads</h1>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <button className="mobile-menu-btn" onClick={() => setIsSidebarOpen(true)}>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '24px', height: '24px' }}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+              </button>
+              <h1>Gestão de Leads</h1>
+            </div>
             <div className="filter-group" style={{ marginTop: '1rem' }}>
               {statusOptions.map((status) => (
                 <button 

@@ -1,10 +1,36 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { VitePWA } from 'vite-plugin-pwa';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), tsconfigPaths()],
+  plugins: [
+    react(), 
+    tsconfigPaths(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      includeAssets: ['logo.png', 'novo.png'],
+      manifest: {
+        name: 'Sistema Advocacia',
+        short_name: 'SistemADV',
+        description: 'Sistema de Gestão de Leads e Fichas Jurídicas',
+        theme_color: '#111234',
+        icons: [
+          {
+            src: 'logo.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: 'logo.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      }
+    })
+  ],
   server: {
     port: 3000,
   },

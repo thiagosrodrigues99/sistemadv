@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
 export default function LandingPage() {
   useEffect(() => {
@@ -35,30 +36,40 @@ export default function LandingPage() {
     mensagem: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Obter leads existentes ou criar novo array
-    const existingLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
-    
     const newLead = {
-      id: Date.now(),
-      ...formData,
+      nome: formData.nome,
+      telefone: formData.telefone,
+      email: formData.email,
+      cpf: formData.cpf,
+      mensagem: formData.mensagem,
       status: 'Sem contato',
-      data: new Date().toLocaleDateString('pt-BR'),
       origem: 'Landing Page'
     };
-    
-    const updatedLeads = [newLead, ...existingLeads];
-    localStorage.setItem('sistemadv_leads', JSON.stringify(updatedLeads));
-    
-    // Atualizar métrica de formulários no dashboard
-    const stats = JSON.parse(localStorage.getItem('sistemadv_stats') || '{"forms": 0}');
-    stats.forms = (stats.forms || 0) + 1;
-    localStorage.setItem('sistemadv_stats', JSON.stringify(stats));
 
-    alert('Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.');
-    setFormData({ nome: '', telefone: '', email: '', cpf: '', mensagem: '' });
+    try {
+      // Salvar no Supabase
+      const { error } = await supabase.from('leads').insert([newLead]);
+      if (error) throw error;
+
+      // Manter no localStorage para compatibilidade imediata (opcional, mas mantendo o que já tinha)
+      const existingLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
+      const updatedLeads = [{ id: Date.now(), ...newLead, data: new Date().toLocaleDateString('pt-BR') }, ...existingLeads];
+      localStorage.setItem('sistemadv_leads', JSON.stringify(updatedLeads));
+      
+      // Atualizar métrica de formulários
+      const stats = JSON.parse(localStorage.getItem('sistemadv_stats') || '{"forms": 0}');
+      stats.forms = (stats.forms || 0) + 1;
+      localStorage.setItem('sistemadv_stats', JSON.stringify(stats));
+
+      alert('Solicitação enviada com sucesso! Nossa equipe entrará em contato em breve.');
+      setFormData({ nome: '', telefone: '', email: '', cpf: '', mensagem: '' });
+    } catch (err) {
+      console.error('Erro ao salvar lead:', err);
+      alert('Ocorreu um erro ao enviar sua solicitação. Por favor, tente novamente.');
+    }
   };
 
   return (
