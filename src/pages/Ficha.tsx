@@ -60,13 +60,33 @@ export default function FichaPage() {
       <div className="ficha-container" style={{ maxWidth: '1000px', margin: '0 auto', background: 'white', padding: '3rem', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }}>
         
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem', borderBottom: '2px solid #111234', paddingBottom: '1.5rem' }}>
-          <div>
+          <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
             <img src="/logo.png" alt="Logo" style={{ height: '60px' }} onError={(e) => e.currentTarget.style.display='none'} />
-            <h1 style={{ fontSize: '1.5rem', color: '#111234', marginTop: '0.5rem', fontWeight: 'bold' }}>DOSSIÊ JURÍDICO - LEAD #{lead.id}</h1>
+            <div>
+              <h1 style={{ fontSize: '1.5rem', color: '#111234', margin: 0, fontWeight: 'bold' }}>FICHA DO CLIENTE</h1>
+            </div>
           </div>
-          <div style={{ textAlign: 'right' }}>
-            <p style={{ fontSize: '0.8rem', color: '#64748b' }}>Responsável Técnico: Dr. Jaime Silva</p>
-            <p style={{ fontSize: '0.8rem', color: '#64748b' }}>Data de Emissão: {new Date().toLocaleDateString()}</p>
+          <div style={{ textAlign: 'right', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <button 
+              onClick={() => window.print()} 
+              className="btn-primary" 
+              style={{ 
+                padding: '0.8rem 1.5rem', 
+                background: '#111234', 
+                color: 'white', 
+                border: 'none', 
+                borderRadius: '8px', 
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem'
+              }}
+            >
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '18px', height: '18px' }}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+              Imprimir Ficha
+            </button>
+            <p style={{ fontSize: '0.75rem', color: '#64748b' }}>Responsável: Dr. Jaime Silva</p>
           </div>
         </header>
 
@@ -232,11 +252,29 @@ export default function FichaPage() {
         </section>
 
         <footer style={{ marginTop: '2rem', padding: '2rem 0', borderTop: '2px solid #f1f5f9', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
-          <button onClick={handleBack} className="btn-secondary" style={{ padding: '0.8rem 2rem' }}>Voltar</button>
+          <button onClick={handleBack} className="btn-secondary" style={{ padding: '0.8rem 2rem', border: '1px solid #cbd5e1', borderRadius: '8px', cursor: 'pointer', background: 'white' }}>Voltar</button>
           <button onClick={handleSave} className="btn-ficha" style={{ padding: '0.8rem 2.5rem', background: isSaving ? '#94a3b8' : '#111234', color: 'white', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 'bold' }} disabled={isSaving}>
             {isSaving ? 'Salvando...' : 'Salvar Alterações'}
           </button>
-          <button onClick={() => window.print()} className="btn-secondary" style={{ padding: '0.8rem 2rem' }}>Gerar PDF/Imprimir</button>
+          <button 
+            onClick={() => window.print()} 
+            className="btn-primary" 
+            style={{ 
+              padding: '0.8rem 2rem', 
+              background: '#475569', 
+              color: 'white', 
+              border: 'none', 
+              borderRadius: '8px', 
+              cursor: 'pointer', 
+              fontWeight: 'bold',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem'
+            }}
+          >
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" style={{ width: '18px', height: '18px' }}><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" /></svg>
+            Imprimir Ficha
+          </button>
         </footer>
       </div>
 
