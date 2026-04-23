@@ -16,33 +16,56 @@ export default function DashboardPage() {
   });
 
   useEffect(() => {
-    // Carregar leads e gerar estatísticas
-    const loadData = () => {
-      const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
-      const savedStats = JSON.parse(localStorage.getItem('sistemadv_stats') || '{"forms": 0}');
-      const savedVisits = parseInt(localStorage.getItem('sistemadv_visitas') || '0');
-      
-      setStats({
-        leads: savedLeads.length,
-        forms: savedStats.forms || 0,
-        visitas: savedVisits
-      });
+    // Carregar dados iniciais do Supabase
+    const loadData = async () => {
+      try {
+        // 1. Buscar Leads (Total e Tabela)
+        const { data: leadsData, error: leadsError } = await supabase
+          .from('leads')
+          .select('*')
+          .order('created_at', { ascending: false });
 
-      const realLeads = savedLeads.map((l: any) => ({
-        nome: l.nome,
-        email: l.email,
-        assunto: l.mensagem || 'Interesse em receber',
-        data: l.data || 'Hoje',
-        status: l.status || 'Novo',
-        statusClass: 'pending'
-      }));
+        if (leadsError) throw leadsError;
 
-      setTableData({
-        'Hoje': realLeads.slice(0, 5),
-        'Semana': realLeads.slice(0, 10),
-        'Mês': realLeads,
-        'Personalizado': realLeads
-      });
+        // 2. Buscar Visitas
+        const { count: visitsCount, error: visitsError } = await supabase
+          .from('visits')
+          .select('*', { count: 'exact', head: true });
+
+        if (visitsError) throw visitsError;
+
+        // Atualizar Estados
+        setStats({
+          leads: leadsData.length,
+          forms: leadsData.length, // Usando total de leads como métrica de formulários por enquanto
+          visitas: visitsCount || 0
+        });
+
+        const realLeads = leadsData.map((l: any) => ({
+          nome: l.nome,
+          email: l.email || 'N/A',
+          assunto: l.mensagem || 'Interesse em receber',
+          data: new Date(l.created_at).toLocaleDateString('pt-BR'),
+          status: l.status || 'Novo',
+          statusClass: l.status === 'Finalizado' ? 'completed' : 'pending'
+        }));
+
+        setTableData({
+          'Hoje': realLeads.filter(l => l.data === new Date().toLocaleDateString('pt-BR')),
+          'Semana': realLeads.slice(0, 10),
+          'Mês': realLeads,
+          'Personalizado': realLeads
+        });
+
+        // Sincronizar LocalStorage (Cache)
+        localStorage.setItem('sistemadv_leads', JSON.stringify(leadsData));
+      } catch (err) {
+        console.error('Erro ao carregar dados do Supabase:', err);
+        
+        // Fallback para LocalStorage em caso de erro de rede
+        const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
+        setStats(prev => ({ ...prev, leads: savedLeads.length }));
+      }
     };
 
     loadData();

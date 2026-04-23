@@ -1112,6 +1112,10 @@ h1 {
     .mobile-only-btn {
         display: flex;
     }
+
+    input, textarea, select {
+        font-size: 16px !important;
+    }
 }
 
 .section-header {

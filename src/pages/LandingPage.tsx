@@ -4,7 +4,17 @@ import { supabase } from '../lib/supabase';
 
 export default function LandingPage() {
   useEffect(() => {
-    // Incrementar contador de visitas
+    // Incrementar contador de visitas no Supabase
+    const trackVisit = async () => {
+      try {
+        await supabase.from('visits').insert([{ page: 'landing_page' }]);
+      } catch (err) {
+        console.error('Erro ao registrar visita:', err);
+      }
+    };
+    trackVisit();
+
+    // Incrementar contador de visitas local (cache)
     const visits = parseInt(localStorage.getItem('sistemadv_visitas') || '0');
     localStorage.setItem('sistemadv_visitas', (visits + 1).toString());
 
