@@ -5,7 +5,10 @@ import { supabase } from '../lib/supabase';
 
 export default function DashboardPage() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [notificationPermission, setNotificationPermission] = useState(Notification.permission);
+  const [renderError, setRenderError] = useState<string | null>(null);
+  const [notificationPermission, setNotificationPermission] = useState<NotificationPermission>(
+    typeof Notification !== 'undefined' ? Notification.permission : 'denied'
+  );
   const [activeFilter, setActiveFilter] = useState('Hoje');
   const [stats, setStats] = useState({ leads: 0, forms: 0, visitas: 0 });
   const [tableData, setTableData] = useState<Record<string, any[]>>({
@@ -71,8 +74,9 @@ export default function DashboardPage() {
 
         // Sincronizar LocalStorage (Cache)
         localStorage.setItem('sistemadv_leads', JSON.stringify(leadsData));
-      } catch (err) {
+      } catch (err: any) {
         console.error('Erro ao carregar dados do Supabase:', err);
+        setRenderError(err.message || 'Erro ao conectar com o banco de dados.');
         
         // Fallback para LocalStorage em caso de erro de rede
         const savedLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
@@ -89,7 +93,7 @@ export default function DashboardPage() {
         console.log('NOVO LEAD RECEBIDO EM TEMPO REAL:', payload);
         
         // Disparar notificação visual
-        if (Notification.permission === 'granted') {
+        if (typeof Notification !== 'undefined' && Notification.permission === 'granted') {
           try {
             new Notification("🚨 Novo Lead Recebido!", {
               body: `Nome: ${payload.new.nome}\nTelefone: ${payload.new.telefone}`,
@@ -175,18 +179,42 @@ export default function DashboardPage() {
   const [endDate, setEndDate] = useState('');
 
   const handleRequestPermission = async () => {
+    if (typeof Notification === 'undefined') {
+      alert('Seu navegador não suporta notificações nativas.');
+      return;
+    }
+    
     const permission = await Notification.requestPermission();
     setNotificationPermission(permission);
     if (permission === 'granted') {
-      new Notification("Notificações Ativadas!", {
-        body: "Você receberá alertas do sistema aqui.",
-        icon: "/logo.png"
-      });
+      try {
+        new Notification("Notificações Ativadas!", {
+          body: "Você receberá alertas do sistema aqui.",
+          icon: "/logo.png"
+        });
+      } catch (e) {
+        console.log('Erro ao enviar notificação inicial:', e);
+      }
     }
   };
 
   const currentStats = statsData[activeFilter] || statsData['Hoje'];
   const currentTable = tableData[activeFilter] || [];
+
+  if (renderError) {
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center', marginTop: '20vh' }}>
+        <h2>Ops! Algo deu errado ao carregar o painel.</h2>
+        <p style={{ color: '#64748b', marginTop: '1rem' }}>{renderError}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          style={{ marginTop: '2rem', padding: '1rem 2rem', background: '#2563eb', color: 'white', border: 'none', borderRadius: '8px' }}
+        >
+          Tentar Novamente
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-layout dashboard-page">
@@ -202,7 +230,7 @@ export default function DashboardPage() {
               </button>
               <h1>Dashboard Operacional</h1>
             </div>
-            {notificationPermission !== 'granted' && (
+            {typeof Notification !== 'undefined' && notificationPermission !== 'granted' && (
               <button 
                 onClick={handleRequestPermission}
                 className="mobile-only-btn"
