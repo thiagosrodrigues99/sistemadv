@@ -142,7 +142,7 @@ function MeetingsContent() {
             </div>
           </div>
 
-          <div className="calendar-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px', background: '#e2e8f0', border: '3px solid #e2e8f0', borderRadius: '12px', overflow: 'hidden' }}>
+          <div className="calendar-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '3px', background: '#475569', border: '3px solid #475569', borderRadius: '12px', overflow: 'hidden' }}>
             {weekDays.map(day => (
               <div key={day} className="calendar-day-head" style={{ background: '#f8fafc', padding: '1rem', textAlign: 'center', fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>{day}</div>
             ))}
