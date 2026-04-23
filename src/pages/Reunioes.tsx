@@ -84,7 +84,7 @@ function MeetingsContent() {
 
   const getStatusColor = (type: string) => {
     switch(type) {
-      case 'meeting': return '#dcfce7';
+      case 'meeting': return '#dbeafe';
       case 'call': return '#fef9c3';
       case 'deadline': return '#fee2e2';
       default: return '#f1f5f9';
