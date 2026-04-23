@@ -84,7 +84,7 @@ function MeetingsContent() {
 
   const getStatusColor = (type: string) => {
     switch(type) {
-      case 'meeting': return '#dbeafe';
+      case 'meeting': return '#2563eb';
       case 'call': return '#fef9c3';
       case 'deadline': return '#fee2e2';
       default: return '#f1f5f9';
@@ -182,6 +182,7 @@ function MeetingsContent() {
                   {dayMeetings.map((m, i) => (
                     <div key={i} className="event-tag" style={{ 
                       background: getStatusColor(m.type), 
+                      color: m.type === 'meeting' ? 'white' : 'inherit',
                       fontSize: '0.65rem', 
                       padding: '2px 6px', 
                       borderRadius: '4px', 
@@ -189,7 +190,8 @@ function MeetingsContent() {
                       whiteSpace: 'nowrap', 
                       overflow: 'hidden', 
                       textOverflow: 'ellipsis',
-                      borderLeft: '2px solid rgba(0,0,0,0.1)'
+                      borderLeft: '2px solid rgba(0,0,0,0.1)',
+                      fontWeight: m.type === 'meeting' ? '600' : 'normal'
                     }}>
                       {m.time} - {shortenName(m.title)}
                     </div>
