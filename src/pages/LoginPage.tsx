@@ -36,7 +36,7 @@ export default function LoginPage() {
 
   return (
     <div className="login-split">
-      <div className="login-visual" style={{ 
+      <div className="login-visual" style={{
         background: "linear-gradient(135deg, rgba(79, 70, 229, 0.9), rgba(124, 58, 237, 0.8)), url('/assets/legal_justice.png')",
         backgroundSize: 'cover',
         backgroundPosition: 'center'
@@ -47,7 +47,7 @@ export default function LoginPage() {
         <div className="login-inner" style={{ width: '100%', maxWidth: '400px' }}>
           <div className="login-header" style={{ textAlign: 'left', marginBottom: '3rem' }}>
             <div className="mobile-only-logo" style={{ marginBottom: '2rem', display: 'none' }}>
-               <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto' }} />
+              <img src="/novo.png" alt="Logo" style={{ height: '80px', width: 'auto' }} />
             </div>
             <h2 style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>Bem-vindo</h2>
             <p style={{ color: 'var(--text-muted)' }}>Por favor, insira seus dados para entrar.</p>
@@ -55,24 +55,24 @@ export default function LoginPage() {
 
           <form className="login-form" onSubmit={handleSubmit}>
             {error && (
-              <div style={{ 
-                padding: '0.8rem', 
-                borderRadius: '8px', 
-                backgroundColor: '#fee2e2', 
-                color: '#b91c1c', 
-                fontSize: '0.85rem', 
-                marginBottom: '1.5rem' 
+              <div style={{
+                padding: '0.8rem',
+                borderRadius: '8px',
+                backgroundColor: '#fee2e2',
+                color: '#b91c1c',
+                fontSize: '0.85rem',
+                marginBottom: '1.5rem'
               }}>
                 {error}
               </div>
             )}
             <div className="form-group" style={{ marginBottom: '1.5rem' }}>
               <label htmlFor="username" style={{ display: 'block', marginBottom: '0.5rem' }}>Usuário</label>
-              <input 
-                type="text" 
-                id="username" 
-                placeholder="thiago" 
-                required 
+              <input
+                type="text"
+                id="username"
+                placeholder="Digite seu usuário"
+                required
                 style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', border: '1px solid var(--glass-border)' }}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -80,20 +80,20 @@ export default function LoginPage() {
             </div>
             <div className="form-group" style={{ marginBottom: '1.5rem' }}>
               <label htmlFor="password" style={{ display: 'block', marginBottom: '0.5rem' }}>Senha</label>
-              <input 
-                type="password" 
-                id="password" 
-                placeholder="••••••••" 
-                required 
+              <input
+                type="password"
+                id="password"
+                placeholder="Digite sua senha"
+                required
                 style={{ width: '100%', padding: '0.8rem', borderRadius: '12px', border: '1px solid var(--glass-border)' }}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
-            <button 
-              type="submit" 
-              className="btn-login" 
+            <button
+              type="submit"
+              className="btn-login"
               disabled={loading}
             >
               {loading ? 'Verificando...' : 'Entrar na Conta'}
