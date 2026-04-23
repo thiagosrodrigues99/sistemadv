@@ -26,6 +26,7 @@ export default function DashboardPage() {
           .order('created_at', { ascending: false });
 
         if (leadsError) throw leadsError;
+        if (!leadsData) throw new Error('Nenhum dado retornado do Supabase');
 
         // 2. Buscar Visitas
         const { count: visitsCount, error: visitsError } = await supabase
@@ -37,18 +38,29 @@ export default function DashboardPage() {
         // Atualizar Estados
         setStats({
           leads: leadsData.length,
-          forms: leadsData.length, // Usando total de leads como métrica de formulários por enquanto
+          forms: leadsData.length,
           visitas: visitsCount || 0
         });
 
-        const realLeads = leadsData.map((l: any) => ({
-          nome: l.nome,
-          email: l.email || 'N/A',
-          assunto: l.mensagem || 'Interesse em receber',
-          data: new Date(l.created_at).toLocaleDateString('pt-BR'),
-          status: l.status || 'Novo',
-          statusClass: l.status === 'Finalizado' ? 'completed' : 'pending'
-        }));
+        const realLeads = leadsData.map((l: any) => {
+          let formattedDate = 'Recent';
+          try {
+            if (l.created_at) {
+              formattedDate = new Date(l.created_at).toLocaleDateString('pt-BR');
+            }
+          } catch (e) {
+            console.error('Erro ao formatar data:', e);
+          }
+
+          return {
+            nome: l.nome || 'Sem Nome',
+            email: l.email || 'N/A',
+            assunto: l.mensagem || 'Interesse em receber',
+            data: formattedDate,
+            status: l.status || 'Novo',
+            statusClass: l.status === 'Finalizado' ? 'completed' : 'pending'
+          };
+        });
 
         setTableData({
           'Hoje': realLeads.filter(l => l.data === new Date().toLocaleDateString('pt-BR')),
