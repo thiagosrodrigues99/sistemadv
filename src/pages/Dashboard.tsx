@@ -51,19 +51,31 @@ export default function DashboardPage() {
     const subscription = supabase
       .channel('leads-realtime')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'leads' }, (payload) => {
-        console.log('Novo lead detectado!', payload);
+        console.log('NOVO LEAD RECEBIDO EM TEMPO REAL:', payload);
         
         // Disparar notificação visual
         if (Notification.permission === 'granted') {
-          new Notification("Novo Lead Recebido!", {
-            body: `Nome: ${payload.new.nome}\nAssunto: ${payload.new.mensagem?.substring(0, 50)}...`,
-            icon: "/logo.png"
-          });
+          try {
+            new Notification("🚨 Novo Lead Recebido!", {
+              body: `Nome: ${payload.new.nome}\nTelefone: ${payload.new.telefone}`,
+              icon: "/logo.png",
+              tag: 'new-lead'
+            });
+          } catch (e) {
+            console.error('Erro ao disparar notificação:', e);
+          }
+        } else {
+          console.warn('Permissão de notificação não concedida.');
         }
 
-        // Tocar som de alerta (opcional)
-        const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-        audio.play().catch(e => console.log('Erro ao tocar som:', e));
+        // Tocar som de alerta
+        try {
+          const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+          audio.volume = 0.5;
+          audio.play().catch(e => console.warn('Navegador bloqueou o som automático:', e));
+        } catch (e) {
+          console.error('Erro ao tocar áudio:', e);
+        }
 
         // Atualizar localStorage para manter sincronia
         const existingLeads = JSON.parse(localStorage.getItem('sistemadv_leads') || '[]');
