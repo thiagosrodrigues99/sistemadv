@@ -117,6 +117,21 @@ export default function FichaPage() {
           </div>
         </section>
 
+        {/* SEÇÃO 7: FINALIZAÇÃO (Movida para a página 1) */}
+        <section className="ficha-section" style={{ marginBottom: '2.5rem' }}>
+          <h2 style={sectionTitleStyle}>7. Enquadramento e Observações</h2>
+          <div style={grid2Style}>
+            <div style={inputGroupStyle}><label style={labelStyle}>MELHOR DIA PARA CONSULTA MÉDICA</label>
+              <input type="text" value={lead.consultaMelhorDia} onChange={e => setLead({...lead, consultaMelhorDia: e.target.value})} style={inputStyle} /></div>
+            <div style={inputGroupStyle}><label style={labelStyle}>QUAIS PROCESSOS SE ENQUADRA?</label>
+              <input type="text" value={lead.processosEnquadra} onChange={e => setLead({...lead, processosEnquadra: e.target.value})} style={inputStyle} placeholder="Ex: Auxilio-Acidente" /></div>
+          </div>
+          <div style={inputGroupStyle}>
+            <label style={labelStyle}>OBSERVAÇÕES GERAIS</label>
+            <textarea value={lead.observacoes} onChange={e => setLead({...lead, observacoes: e.target.value})} style={{...inputStyle, background: '#f8fafc'}} />
+          </div>
+        </section>
+
         {/* SEÇÃO 2: CONTATOS E LOCALIZAÇÃO */}
         <section className="ficha-section" style={{ marginBottom: '2.5rem' }}>
           <h2 style={sectionTitleStyle}>2. Contato e Endereço</h2>
@@ -236,19 +251,6 @@ export default function FichaPage() {
           </div>
         </section>
 
-        {/* SEÇÃO 7: FINALIZAÇÃO */}
-        <section className="ficha-section" style={{ marginBottom: '2.5rem' }}>
-          <h2 style={sectionTitleStyle}>7. Enquadramento e Observações</h2>
-          <div style={grid2Style}>
-            <div style={inputGroupStyle}><label style={labelStyle}>MELHOR DIA PARA CONSULTA MÉDICA</label>
-              <input type="text" value={lead.consultaMelhorDia} onChange={e => setLead({...lead, consultaMelhorDia: e.target.value})} style={inputStyle} /></div>
-            <div style={inputGroupStyle}><label style={labelStyle}>QUAIS PROCESSOS SE ENQUADRA?</label>
-              <input type="text" value={lead.processosEnquadra} onChange={e => setLead({...lead, processosEnquadra: e.target.value})} style={inputStyle} placeholder="Ex: Auxilio-Acidente" /></div>
-          </div>
-          <div style={inputGroupStyle}>
-            <label style={labelStyle}>OBSERVAÇÕES GERAIS</label>
-            <textarea value={lead.observacoes} onChange={e => setLead({...lead, observacoes: e.target.value})} style={{...inputStyle, background: '#f8fafc'}} />
-          </div>
         </section>
 
         <footer style={{ marginTop: '2rem', padding: '2rem 0', borderTop: '2px solid #f1f5f9', display: 'flex', justifyContent: 'flex-end', gap: '1rem' }}>
