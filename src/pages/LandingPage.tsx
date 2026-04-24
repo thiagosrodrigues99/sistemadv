@@ -225,9 +225,7 @@ export default function LandingPage() {
             <div className="cards-grid">
               {/* CARD 1: LOAS */}
               <div className="card service-card">
-                <div className="card-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
-                </div>
+                <img src="/loas1.png" alt="LOAS (BPC)" className="card-image" style={{ height: 'auto', objectFit: 'cover' }} />
                 <h3>LOAS (BPC)</h3>
                 <ul className="card-checklist">
                   <li>
@@ -252,9 +250,7 @@ export default function LandingPage() {
 
               {/* CARD 2: AUXÍLIO-ACIDENTE */}
               <div className="card service-card">
-                <div className="card-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                </div>
+                <img src="/acidente.jpg" alt="Auxílio-Acidente" className="card-image" />
                 <h3>Auxílio-Acidente</h3>
                 <ul className="card-checklist">
                   <li>
@@ -279,9 +275,7 @@ export default function LandingPage() {
 
               {/* CARD 3: APOSENTADORIA */}
               <div className="card service-card">
-                <div className="card-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                </div>
+                <img src="/aposentadoria.png" alt="Aposentadoria" className="card-image" />
                 <h3>Aposentadoria</h3>
                 <ul className="card-checklist">
                   <li>
@@ -313,23 +307,17 @@ export default function LandingPage() {
             <h2 className="section-title">ÁREAS DE ATUAÇÃO:</h2>
             <div className="cards-grid">
               <div className="card">
-                <div className="card-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M6 7V6a6 6 0 0112 0v1M3 7h18l-1 13H4L3 7z" /></svg>
-                </div>
+                <img src="/card trabalhista.jfif" alt="Direito Trabalhista" className="card-image" />
                 <h3>Direito Trabalhista</h3>
                 <p>Atuação em questões envolvendo relações de trabalho, verbas rescisórias, direitos do trabalhador e conflitos trabalhistas em geral.</p>
               </div>
               <div className="card">
-                <div className="card-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                </div>
+                <img src="/processo civil.jfif" alt="Direito Civil" className="card-image" />
                 <h3>Direito Civil</h3>
                 <p>Atuação em demandas diversas do dia a dia, com foco em orientação, prevenção e resolução de conflitos.</p>
               </div>
               <div className="card">
-                <div className="card-icon">
-                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
-                </div>
+                <img src="/direito previdenciario.jpg" alt="Direito Previdenciário" className="card-image" />
                 <h3>Direito Previdenciário</h3>
                 <p>Atuação em benefícios do INSS, aposentadorias, auxílios e demais demandas relacionadas à seguridade social.</p>
               </div>
