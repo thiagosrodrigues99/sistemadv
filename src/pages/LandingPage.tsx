@@ -211,7 +211,7 @@ export default function LandingPage() {
                 </svg>
               </div>
               <div className="trust-content-text">
-                <h2>GARANTIMOS SEUS DIREITOS COM ATUAÇÃO TÉCNICA E FOCO EM RESULTADO.</h2>
+                <h2>VAMOS JUNTOS GARANTIR OS SEUS DIREITOS COM ATUAÇÃO TÉCNICA E FOCO EM RESULTADO.</h2>
                 <p>Estamos ao seu lado para orientar e conduzir cada etapa com segurança.</p>
               </div>
             </div>
